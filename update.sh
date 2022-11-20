@@ -1,5 +1,5 @@
 echo "Fetching latest..."
-git fetch
+proxychains git fetch origin deagle
 
 echo "Checkout to deagle branch"
 git checkout deagle
