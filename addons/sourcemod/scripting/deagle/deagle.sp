@@ -1,9 +1,10 @@
 
+
 public Action CommandDeagleTest(int client, int args)
 {
 	ReplyToCommand(client, "[DEagle] Test3!");
 
-    UpdateSkin(client, 0, 51);
+	UpdateSkin(client, 0, 51);
 	return Plugin_Handled;
 }
 
@@ -17,7 +18,11 @@ void UpdateSkin(int client, int weaponClassIndex, int skinId)
 	UpdatePlayerData(client, updateFields);
 
 	RefreshWeapon(client, weaponClassIndex);
-    GivePlayerItem(client, g_WeaponClasses[weaponClassIndex]);
+
+	int entity = GetPlayerWeaponSlot(client, 0);
+	if (entity != -1) {
+		AcceptEntityInput(entity, "Kill");
+    }
+    
+	GivePlayerItem(client, g_WeaponClasses[weaponClassIndex]);
 }
-
-
