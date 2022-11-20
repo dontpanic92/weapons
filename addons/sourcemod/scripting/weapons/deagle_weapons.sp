@@ -5,10 +5,6 @@ public Action CommandDeagleTest(int client, int args)
 {
 	ReplyToCommand(client, "[DEagle] Test3!");
 
-	char auth[256];
-	GetClientAuthId(client, AuthId_SteamID64, auth, sizeof(auth));
-	ReplyToCommand(client, "[DEagle] ClientId %s", auth);
-
 	int target;
 	if (client > 0)
 	{
@@ -16,6 +12,10 @@ public Action CommandDeagleTest(int client, int args)
 	}
 	else
 	{
+		char auth[256];
+		GetClientAuthId(client, AuthId_SteamID64, auth, sizeof(auth));
+		ReplyToCommand(client, "[DEagle] ClientId %s", auth);
+		
 		char steamid[64];
 		GetCmdArg(1, steamid, sizeof(steamid));
 		target = FindTargetBySteam64Id(steamid);
