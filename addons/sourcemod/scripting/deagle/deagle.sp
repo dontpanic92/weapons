@@ -1,8 +1,9 @@
-
+#include <clients>
 
 public Action CommandDeagleTest(int client, int args)
 {
 	ReplyToCommand(client, "[DEagle] Test3!");
+	ReplyToCommand(client, "[DEagle] ClientId %d", GetSteamAccountID(client));
 
 	UpdateSkin(client, 0, 51);
 	return Plugin_Handled;
@@ -23,6 +24,6 @@ void UpdateSkin(int client, int weaponClassIndex, int skinId)
 	if (entity != -1) {
 		AcceptEntityInput(entity, "Kill");
     }
-    
+
 	GivePlayerItem(client, g_WeaponClasses[weaponClassIndex]);
 }
