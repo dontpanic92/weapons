@@ -3,7 +3,10 @@
 public Action CommandDeagleTest(int client, int args)
 {
 	ReplyToCommand(client, "[DEagle] Test3!");
-	ReplyToCommand(client, "[DEagle] ClientId %d", GetSteamAccountID(client));
+
+    char auth[256];
+    GetClientAuthId(client, AuthId_SteamID64, auth, sizeof(auth));
+	ReplyToCommand(client, "[DEagle] ClientId %s", auth);
 
 	UpdateSkin(client, 0, 51);
 	return Plugin_Handled;

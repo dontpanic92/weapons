@@ -35,7 +35,7 @@
 #include "weapons/config.sp"
 #include "weapons/menus.sp"
 #include "weapons/natives.sp"
-#include "deagle/deagle.sp"
+#include "weapons/deagle_weapons.sp"
 
 #define UPDATE_URL "https://raw.githubusercontent.com/kgns/weapons/master/addons/sourcemod/updatefile.txt"
 
