@@ -19,6 +19,15 @@ public Plugin myinfo =
 Database db = null;
 char g_steamId[MAXPLAYERS+1][128];
 
+public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
+{
+	RegPluginLibrary("deagle");
+
+	CreateNative("FindTargetBySteam64Id", FindTargetBySteam64Id_Native);
+
+	return APLRes_Success;
+}
+
 public void OnPluginStart()
 {
     Database.Connect(SQLConnectCallback, "csgodb");
@@ -76,7 +85,7 @@ public void SQLConnectCallback(Database database, const char[] error, any data)
     }
 }
 
-public int FindTargetBySteam64Id(char[] steamid)
+public int FindTargetBySteam64Id_Native(char[] steamid)
 {
     for (int i = 1; i < MAXPLAYERS + 1; i++)
     {
