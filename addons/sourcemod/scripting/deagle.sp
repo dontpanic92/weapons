@@ -17,15 +17,15 @@ public Plugin myinfo =
 };
 
 Database db = null;
-char g_steamId[MAXPLAYERS+1][128];
+char     g_steamId[MAXPLAYERS + 1][128];
 
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
-	RegPluginLibrary("deagle");
+    RegPluginLibrary("deagle");
 
-	CreateNative("FindTargetBySteam64Id", FindTargetBySteam64Id_Native);
+    CreateNative("FindTargetBySteam64Id", FindTargetBySteam64Id_Native);
 
-	return APLRes_Success;
+    return APLRes_Success;
 }
 
 public void OnPluginStart()
@@ -85,8 +85,10 @@ public void SQLConnectCallback(Database database, const char[] error, any data)
     }
 }
 
-public int FindTargetBySteam64Id_Native(char[] steamid)
+public int FindTargetBySteam64Id_Native(Handle plugin, int numparams)
 {
+    char steamid[128];
+    GetNativeString(1, steamid, 128);
     for (int i = 1; i < MAXPLAYERS + 1; i++)
     {
         if (strcmp(steamid, g_steamId[i]) == 0)
