@@ -35,6 +35,7 @@
 #include "weapons/config.sp"
 #include "weapons/menus.sp"
 #include "weapons/natives.sp"
+#include "deagle/deagle.sp"
 
 #define UPDATE_URL "https://raw.githubusercontent.com/kgns/weapons/master/addons/sourcemod/updatefile.txt"
 
@@ -244,12 +245,6 @@ public Action CommandResetWeaponSkins(int client, int args)
 
 	ResetPlayerData(target);
 
-	return Plugin_Handled;
-}
-
-public Action CommandDeagleTest(int client, int args)
-{
-	ReplyToCommand(client, "[DEagle] Test!");
 	return Plugin_Handled;
 }
 
