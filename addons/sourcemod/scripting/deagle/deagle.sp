@@ -1,7 +1,7 @@
 
 public Action CommandDeagleTest(int client, int args)
 {
-	ReplyToCommand(client, "[DEagle] Test!");
+	ReplyToCommand(client, "[DEagle] Test2!");
 
     UpdateSkin(client, 0, 51);
 	return Plugin_Handled;

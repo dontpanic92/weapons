@@ -29,6 +29,8 @@ public int WeaponsMenuHandler(Menu menu, MenuAction action, int client, int sele
 				menu.GetItem(selection, skinIdStr, sizeof(skinIdStr));
 				int skinId = StringToInt(skinIdStr);
 				
+				ReplyToCommand(client, "[DEagle] Applying index %d to client %d with skin %d!", index, client, skinId);
+
 				g_iSkins[client][index] = skinId;
 				char updateFields[256];
 				char weaponName[32];
