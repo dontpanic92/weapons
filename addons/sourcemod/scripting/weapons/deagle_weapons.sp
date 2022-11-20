@@ -1,14 +1,32 @@
 #include <clients>
+#include <deagle>
 
 public Action CommandDeagleTest(int client, int args)
 {
 	ReplyToCommand(client, "[DEagle] Test3!");
 
-    char auth[256];
-    GetClientAuthId(client, AuthId_SteamID64, auth, sizeof(auth));
+	char auth[256];
+	GetClientAuthId(client, AuthId_SteamID64, auth, sizeof(auth));
 	ReplyToCommand(client, "[DEagle] ClientId %s", auth);
 
-	UpdateSkin(client, 0, 51);
+	int target;
+	if (client > 0)
+	{
+		target = client;
+	}
+	else
+	{
+		char steamid[64];
+		GetCmdArg(1, steamid, sizeof(steamid));
+		target = FindTargetBySteam64Id(steamid);
+		if (target == -1)
+		{
+			LogError("Unable to find user %s", steamid);
+			return;
+		}
+	}
+
+	UpdateSkin(target, 0, 51);
 	return Plugin_Handled;
 }
 
@@ -24,9 +42,10 @@ void UpdateSkin(int client, int weaponClassIndex, int skinId)
 	RefreshWeapon(client, weaponClassIndex);
 
 	int entity = GetPlayerWeaponSlot(client, 0);
-	if (entity != -1) {
+	if (entity != -1)
+	{
 		AcceptEntityInput(entity, "Kill");
-    }
+	}
 
 	GivePlayerItem(client, g_WeaponClasses[weaponClassIndex]);
 }
