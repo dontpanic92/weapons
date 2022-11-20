@@ -78,7 +78,7 @@ public void SQLConnectCallback(Database database, const char[] error, any data)
 
 public int FindTargetBySteam64Id(char[] steamid)
 {
-    for (int i = 1; i < MAX_PLAYERS + 1; i++)
+    for (int i = 1; i < MAXPLAYERS + 1; i++)
     {
         if (strcmp(steamid, g_steamId[i]) == 0)
         {
