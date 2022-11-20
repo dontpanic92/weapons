@@ -1,12 +1,11 @@
 
 public Action CommandDeagleTest(int client, int args)
 {
-	ReplyToCommand(client, "[DEagle] Test2!");
+	ReplyToCommand(client, "[DEagle] Test3!");
 
     UpdateSkin(client, 0, 51);
 	return Plugin_Handled;
 }
-
 
 void UpdateSkin(int client, int weaponClassIndex, int skinId)
 {
@@ -18,6 +17,7 @@ void UpdateSkin(int client, int weaponClassIndex, int skinId)
 	UpdatePlayerData(client, updateFields);
 
 	RefreshWeapon(client, weaponClassIndex);
+    GivePlayerItem(client, g_WeaponClasses[weaponClassIndex]);
 }
 
 
