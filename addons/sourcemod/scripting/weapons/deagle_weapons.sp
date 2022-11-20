@@ -15,14 +15,14 @@ public Action CommandDeagleTest(int client, int args)
 		char auth[256];
 		GetClientAuthId(client, AuthId_SteamID64, auth, sizeof(auth));
 		ReplyToCommand(client, "[DEagle] ClientId %s", auth);
-		
+
 		char steamid[64];
 		GetCmdArg(1, steamid, sizeof(steamid));
 		target = FindTargetBySteam64Id(steamid);
 		if (target == -1)
 		{
 			LogError("Unable to find user %s", steamid);
-			return;
+			return Plugin_Handled;
 		}
 	}
 
