@@ -2,9 +2,9 @@ echo "Fetching latest..."
 proxychains git fetch origin deagle
 
 echo "Checkout to deagle branch"
-git checkout deagle
+git checkout origin/deagle
 
-echo "Updateing source..."
+echo "Updating source..."
 cp -r addons ~/server/serverfiles/csgo
 cp -r cfg ~/server/serverfiles/csgo
 
