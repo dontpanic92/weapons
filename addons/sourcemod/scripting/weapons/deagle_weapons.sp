@@ -25,7 +25,7 @@ public Action CommandDeagleTest(int client, int args)
 		}
 	}
 
-	UpdateSkin(target, 0, 51);
+	UpdateSkin(target, 0, 51, 0, 0);
 	return Plugin_Handled;
 }
 
@@ -35,7 +35,7 @@ public Action CommandDeagleSetWeapon(int client, int args)
 
 	if (client > 0)
 	{
-		ReplyToCommand("[DEagle] warning: cannot be called from client.");
+		ReplyToCommand(client, "[DEagle] warning: cannot be called from client.");
 		return Plugin_Handled;
 	}
 	else
