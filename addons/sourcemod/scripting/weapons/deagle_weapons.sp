@@ -63,11 +63,11 @@ public Action CommandDeagleSetWeapon(int client, int args)
 		GetCmdArg(3, skinIdStr, sizeof(skinIdStr));
 		int skinId = StringToInt(skinIdStr);
 
-        char seedIdStr[64];
+		char seedIdStr[64];
 		GetCmdArg(4, seedIdStr, sizeof(seedIdStr));
 		int seedId = StringToInt(seedIdStr);
-        
-        char weaponFloatStr[64];
+
+		char weaponFloatStr[64];
 		GetCmdArg(5, weaponFloatStr, sizeof(weaponFloatStr));
 		float weaponFloat = StringToFloat(weaponFloatStr);
 
@@ -94,13 +94,13 @@ void UpdateSkin(int client, int weaponClassIndex, int skinId, int seedId, float 
 	g_iSkins[client][weaponClassIndex]      = skinId;
 	g_iWeaponSeed[client][weaponClassIndex] = seedId;
 
-	if (weaponFloat < 0)
+	if (weaponFloat < 0.0)
 	{
-		weaponFloat = 0;
+		weaponFloat = 0.0;
 	}
-	else if (weaponFloat > 1)
+	else if (weaponFloat > 1.0)
 	{
-		weaponFloat = 1;
+		weaponFloat = 1.0;
 	}
 
 	g_fFloatValue[client][weaponClassIndex] = weaponFloat;
@@ -115,7 +115,8 @@ void UpdateSkin(int client, int weaponClassIndex, int skinId, int seedId, float 
 
 	RefreshWeapon(client, weaponClassIndex);
 
-	int entity = GetPlayerWeaponSlot(client, 0);
+    int slot = g_WeaponSlot[weaponClassIndex];
+	int entity = GetPlayerWeaponSlot(client, slot);
 	if (entity != -1)
 	{
 		AcceptEntityInput(entity, "Kill");
