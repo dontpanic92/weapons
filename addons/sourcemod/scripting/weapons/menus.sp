@@ -371,6 +371,9 @@ public int SeedMenuHandler(Menu menu, MenuAction action, int client, int selecti
 					g_iSeedRandom[client][g_iIndex[client]] = 0;
 					RefreshWeapon(client, g_iIndex[client]);
 
+					
+					ReplyToCommand(client, "[DEagle] Setting seed %s", g_WeaponClasses[g_iIndex[client]]);
+
 					char updateFields[256];
 					char weaponName[32];
 					RemoveWeaponPrefix(g_WeaponClasses[g_iIndex[client]], weaponName, sizeof(weaponName));

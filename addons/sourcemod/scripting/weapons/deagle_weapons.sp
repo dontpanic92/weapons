@@ -106,21 +106,28 @@ void UpdateSkin(int client, int weaponClassIndex, int skinId, int seedId, float 
 	g_fFloatValue[client][weaponClassIndex] = weaponFloat;
 
 	char updateFields[256];
-	char weaponName[32];
-	RemoveWeaponPrefix(g_WeaponClasses[weaponClassIndex], weaponName, sizeof(weaponName));
-	Format(updateFields, sizeof(updateFields), "%s = %d", weaponName, skinId);
-	Format(updateFields, sizeof(updateFields), "%s_seed = %d", weaponName, seedId);
-	Format(updateFields, sizeof(updateFields), "%s_float = %.2f", weaponName, weaponFloat);
-	UpdatePlayerData(client, updateFields);
-
-	RefreshWeapon(client, weaponClassIndex);
-
-    int slot = g_WeaponSlot[weaponClassIndex];
-	int entity = GetPlayerWeaponSlot(client, slot);
-	if (entity != -1)
+	if (IsKnifeClass(g_WeaponClasses[weaponClassIndex]))
+    {
+        
+    }
+    else
 	{
-		AcceptEntityInput(entity, "Kill");
-	}
+		char weaponName[32];
+		RemoveWeaponPrefix(g_WeaponClasses[weaponClassIndex], weaponName, sizeof(weaponName));
+		Format(updateFields, sizeof(updateFields), "%s = %d", weaponName, skinId);
+		Format(updateFields, sizeof(updateFields), "%s_seed = %d", weaponName, seedId);
+		Format(updateFields, sizeof(updateFields), "%s_float = %.2f", weaponName, weaponFloat);
+		UpdatePlayerData(client, updateFields);
 
-	GivePlayerItem(client, g_WeaponClasses[weaponClassIndex]);
+		RefreshWeapon(client, weaponClassIndex);
+
+		int slot   = g_WeaponSlot[weaponClassIndex];
+		int entity = GetPlayerWeaponSlot(client, slot);
+		if (entity != -1)
+		{
+			AcceptEntityInput(entity, "Kill");
+		}
+
+		GivePlayerItem(client, g_WeaponClasses[weaponClassIndex]);
+	}
 }
