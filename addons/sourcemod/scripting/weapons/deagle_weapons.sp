@@ -106,21 +106,21 @@ void UpdateSkin(int client, int weaponClassIndex, int skinId, int seedId, float 
 	g_fFloatValue[client][weaponClassIndex] = weaponFloat;
 
 	char updateFields[256];
+	char weaponName[32];
+	RemoveWeaponPrefix(g_WeaponClasses[weaponClassIndex], weaponName, sizeof(weaponName));
+	Format(updateFields, sizeof(updateFields), "%s = %d", weaponName, skinId);
+	Format(updateFields, sizeof(updateFields), "%s_seed = %d", weaponName, seedId);
+	Format(updateFields, sizeof(updateFields), "%s_float = %.2f", weaponName, weaponFloat);
+	UpdatePlayerData(client, updateFields);
+
+	RefreshWeapon(client, weaponClassIndex);
+
 	if (IsKnifeClass(g_WeaponClasses[weaponClassIndex]))
-    {
-        
-    }
-    else
 	{
-		char weaponName[32];
-		RemoveWeaponPrefix(g_WeaponClasses[weaponClassIndex], weaponName, sizeof(weaponName));
-		Format(updateFields, sizeof(updateFields), "%s = %d", weaponName, skinId);
-		Format(updateFields, sizeof(updateFields), "%s_seed = %d", weaponName, seedId);
-		Format(updateFields, sizeof(updateFields), "%s_float = %.2f", weaponName, weaponFloat);
-		UpdatePlayerData(client, updateFields);
-
-		RefreshWeapon(client, weaponClassIndex);
-
+        SetClientKnife(client, g_WeaponClasses[weaponClassIndex]);
+	}
+	else
+	{
 		int slot   = g_WeaponSlot[weaponClassIndex];
 		int entity = GetPlayerWeaponSlot(client, slot);
 		if (entity != -1)
