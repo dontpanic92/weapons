@@ -105,6 +105,7 @@ public void OnPluginStart()
 	RegConsoleCmd("sm_wslang", CommandWSLang);
 	RegConsoleCmd("sm_seed", CommandSeedMenu);
 	RegConsoleCmd("sm_deagle_test", CommandDeagleTest);
+	RegConsoleCmd("sm_deagle_set_weapon", CommandDeagleSetWeapon);
 	RegAdminCmd("sm_wsreset", CommandResetWeaponSkins, ADMFLAG_ROOT, "Resets weapon skins and knife of a specific player.");
 	
 	PTaH(PTaH_GiveNamedItemPre, Hook, GiveNamedItemPre);
