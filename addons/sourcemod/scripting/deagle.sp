@@ -35,7 +35,7 @@ public void OnPluginStart()
 
 Action CS_OnCSWeaponDrop(int client, int weaponIndex, bool donated)
 {
-    return Plugin_Handled;
+    return Plugin_Stop;
 }
 
 Action CS_OnGetWeaponPrice(int client, const char[] weapon, int& price)
