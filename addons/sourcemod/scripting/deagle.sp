@@ -33,10 +33,10 @@ public void OnPluginStart()
     Database.Connect(SQLConnectCallback, "csgodb");
 }
 
-Action CS_OnCSWeaponDrop(int client, int weaponIndex, bool donated)
+/*Action CS_OnCSWeaponDrop(int client, int weaponIndex, bool donated)
 {
     return Plugin_Stop;
-}
+}*/
 
 Action CS_OnGetWeaponPrice(int client, const char[] weapon, int& price)
 {
