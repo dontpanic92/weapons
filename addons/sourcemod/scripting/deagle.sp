@@ -33,6 +33,17 @@ public void OnPluginStart()
     Database.Connect(SQLConnectCallback, "csgodb");
 }
 
+Action CS_OnCSWeaponDrop(int client, int weaponIndex, bool donated)
+{
+    return Plugin_Handled;
+}
+
+Action CS_OnGetWeaponPrice(int client, const char[] weapon, int& price)
+{
+    price = 0;
+    return Plugin_Handled;
+}
+
 public void OnClientAuthorized(int client, const char[] auth)
 {
     char steamid[128];
