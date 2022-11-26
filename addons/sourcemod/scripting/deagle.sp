@@ -164,10 +164,17 @@ Action MapChangeTimer(Handle timer)
 		return Plugin_Stop;
 	}
 
-	if (g_SecondsToChangeMap >= 60 && g_SecondsToChangeMap <= 10 * 60 && g_SecondsToChangeMap % 60 == 0) {
+	if (g_SecondsToChangeMap >= 60 && g_SecondsToChangeMap <= 10 * 60 && g_SecondsToChangeMap % 60 == 0)
+	{
 		PrintToChatAll(" \x10[DEagle] \x0B%d分钟后将更换地图。下一张地图为： \x04%s", g_SecondsToChangeMap / 60, g_NextMap);
-	} else if (g_SecondsToChangeMap <= 30) {
+	}
+	else if (g_SecondsToChangeMap <= 30) {
 		PrintToChatAll(" \x10[DEagle] \x0B即将更换地图。下一张地图为： \x04%s", g_NextMap);
+	}
+
+	if (g_SecondsToChangeMap % 60 == 0)
+	{
+		PrintToChatAll(" \x10[DEagle] \x0B欢迎来到 DEagle 社区服，\x04访问 \x10https://dealge.club \x04一键检视 Buff/UU 在售饰品");
 	}
 
 	g_SecondsToChangeMap = g_SecondsToChangeMap - g_ChangeMapTimerInterval;
