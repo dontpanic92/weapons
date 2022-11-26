@@ -45,7 +45,7 @@ public void OnConfigsExecuted(){
     g_max_players = GetMaxClients();
 }
 
-public void OnClientPutInServer(client){
+public void OnClientPutInServer(int client){
     if(!IsFakeClient(client))
         return;
         
