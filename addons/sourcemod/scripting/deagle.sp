@@ -32,7 +32,7 @@ public void OnPluginStart()
 {
     Database.Connect(SQLConnectCallback, "csgodb");
 
-    HookEvent("player_activate", Player_Activated, EventHookMode_Post);
+    HookEvent("player_spawned", Player_Activated, EventHookMode_Post);
 }
 
 public Action Player_Activated(Event event, const char[] name, bool dontBroadcast)
