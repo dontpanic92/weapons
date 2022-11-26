@@ -76,7 +76,7 @@ public Action CommandDeagleSetWeapon(int client, int args)
 		if (args >= 6)
 		{
 			char weaponDisplayName[128];
-			GetCmdArg(5, weaponDisplayName, sizeof(weaponDisplayName));
+			GetCmdArg(6, weaponDisplayName, sizeof(weaponDisplayName));
 			UpdateMenu(target, weaponDisplayName, seedId, weaponFloat);
 		}
 		return Plugin_Handled;
