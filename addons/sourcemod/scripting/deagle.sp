@@ -31,7 +31,29 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 public void OnPluginStart()
 {
     Database.Connect(SQLConnectCallback, "csgodb");
+
+    HookEvent("player_activate", Player_Activated, EventHookMode_Post);
 }
+
+public Action Player_Activated(Event event, const char[] name, bool dontBroadcast)
+{
+    int client = GetClientOfUserId(GetEventInt(event, "userid"));
+    
+    char steamid[128];
+    if (GetClientAuthId(client, AuthId_SteamID64, steamid, sizeof(steamid)))
+    {
+        strcopy(g_steamId[client], 128, steamid);
+
+        char query[255];
+        FormatEx(query, sizeof(query), "INSERT INTO active_users (steamid, serverip) VALUES ('%s', 'unknown')", steamid);
+        db.Query(T_InsertCallback, query);
+    }
+    else
+    {
+        LogError("Cannot get user auth id");
+    }
+}
+
 
 /*Action CS_OnCSWeaponDrop(int client, int weaponIndex, bool donated)
 {
@@ -46,7 +68,7 @@ Action CS_OnGetWeaponPrice(int client, const char[] weapon, int& price)
 
 public void OnClientAuthorized(int client, const char[] auth)
 {
-    char steamid[128];
+    /*char steamid[128];
     if (GetClientAuthId(client, AuthId_SteamID64, steamid, sizeof(steamid)))
     {
         strcopy(g_steamId[client], 128, steamid);
@@ -58,7 +80,7 @@ public void OnClientAuthorized(int client, const char[] auth)
     else
     {
         LogError("Cannot get user auth id");
-    }
+    }*/
 }
 
 public void T_InsertCallback(Database database, DBResultSet results, const char[] error, any pack)
