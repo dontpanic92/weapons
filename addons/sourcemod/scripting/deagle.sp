@@ -36,8 +36,8 @@ public void OnPluginStart()
 }
 
 Handle g_Cvar_bot_quota = INVALID_HANDLE;
-int g_bot_quota
-int g_max_players
+int g_bot_quota;
+int g_max_players;
 
 public OnConfigsExecuted(){
     g_Cvar_bot_quota = FindConVar("bot_quota");
@@ -60,7 +60,7 @@ public OnClientPutInServer(client){
     if(count<=g_bot_quota)
         return;
     
-    String name[32]
+    char name[32];
     if(!GetClientName(client, name, 31))
         return;
     ServerCommand("bot_kick %s", name);
