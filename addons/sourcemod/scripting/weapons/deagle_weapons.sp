@@ -109,13 +109,17 @@ int InfoMenuHandler(Menu menu, MenuAction action, int client, int selection)
 	return 0;
 }
 
-void UpdateMenu(int client)
+void UpdateMenu(int client, char weaponName[], int seedId, float weaponFloat)
 {
 	Menu menu = new Menu(InfoMenuHandler);
-	menu.SetTitle("正在检视：");
-	menu.AddItem("a2", "模板编号：");
-	menu.AddItem("a3", "皮肤磨损：");
-	menu.ExitBackButton = true;
+	menu.SetTitle("正在检视：%s", weaponName);
+
+	char buffer[128];
+	Format(buffer, sizeof(buffer), "模板编号：%d", seedId);
+	menu.AddItem("a2", buffer, ITEMDRAW_DISABLED);
+	
+	Format(buffer, sizeof(buffer), "皮肤磨损：%f", weaponFloat);
+	menu.AddItem("a3", buffer, ITEMDRAW_DISABLED);
 
 	menu.Display(client, MENU_TIME_FOREVER);
 }
