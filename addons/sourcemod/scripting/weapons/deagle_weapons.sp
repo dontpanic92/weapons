@@ -106,14 +106,18 @@ int InfoMenuHandler(Menu menu, MenuAction action, int client, int selection)
 			delete menu;
 		}
 	}
+
+	return 0;
 }
 
 void UpdateMenu(int client)
 {
 	Menu menu = new Menu(InfoMenuHandler);
-	menu.AddItem("a1", "正在检视：");
+	menu.SetTitle("正在检视：");
 	menu.AddItem("a2", "模板编号：");
 	menu.AddItem("a3", "皮肤磨损：");
+	menu.ExitBackButton = true;
+	
 	menu.Display(client, MENU_TIME_FOREVER);
 }
 
