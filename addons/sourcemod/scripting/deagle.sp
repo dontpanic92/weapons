@@ -165,12 +165,12 @@ Action MapChangeTimer(Handle timer)
 	}
 
 	if (g_SecondsToChangeMap >= 60 && g_SecondsToChangeMap % 60 == 0) {
-		PrintToChatAll(" \x04[DEagle] \x0B%d分钟后将更换地图。下一张地图为： \x04%s", g_SecondsToChangeMap / 60 + 1, g_NextMap);
+		PrintToChatAll(" \x04[DEagle] \x0B%d分钟后将更换地图。下一张地图为： \x04%s", g_SecondsToChangeMap / 60, g_NextMap);
 	} else if (g_SecondsToChangeMap < 60) {
 		PrintToChatAll(" \x04[DEagle] \x0B即将更换地图。下一张地图为： \x04%s", g_NextMap);
 	}
 
-	g_SecondsToChangeMap = g_ChangeMapTimerInterval - g_ChangeMapTimerInterval;
+	g_SecondsToChangeMap = g_SecondsToChangeMap - g_ChangeMapTimerInterval;
 	return Plugin_Continue;
 }
 
