@@ -35,6 +35,37 @@ public void OnPluginStart()
     HookEvent("player_spawned", Player_Activated, EventHookMode_Post);
 }
 
+Handle g_Cvar_bot_quota = INVALID_HANDLE;
+int g_bot_quota
+int g_max_players
+
+public OnConfigsExecuted(){
+    g_Cvar_bot_quota = FindConVar("bot_quota");
+    g_bot_quota = GetConVarInt(g_Cvar_bot_quota);
+    g_max_players = GetMaxClients();
+}
+
+public OnClientPutInServer(client){
+    if(!IsFakeClient(client))
+        return;
+        
+    if(g_bot_quota < GetConVarInt(g_Cvar_bot_quota))
+        SetConVarInt(g_Cvar_bot_quota, g_bot_quota);
+    
+    int i, count;
+    for(i = 1; i<=g_max_players; i++)
+        if(IsClientInGame(i) && GetClientTeam(i)>1)
+            count++;
+            
+    if(count<=g_bot_quota)
+        return;
+    
+    String name[32]
+    if(!GetClientName(client, name, 31))
+        return;
+    ServerCommand("bot_kick %s", name);
+}  
+
 /*
 default (white): \x01
 teamcolour (will be purple if message from server): \x03
@@ -88,6 +119,15 @@ public Action CS_OnGetWeaponPrice(int client, const char[] weapon, int& price)
     price = 0;
     return Plugin_Handled;
 }
+
+public void OnMapStart()
+{
+    int entity = -1;
+    while ((entity = FindEntityByClassname(entity, "func_bomb_target")) != -1)
+    {
+        AcceptEntityInput(entity, "Disable"); // or "Kill"
+    }
+}  
 
 public void OnClientAuthorized(int client, const char[] auth)
 {
