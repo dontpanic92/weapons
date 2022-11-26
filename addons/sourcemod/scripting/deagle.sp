@@ -69,7 +69,7 @@ public void OnClientPutInServer(int client)
 	ServerCommand("bot_kick %s", name);
 }
 
-public Action OnTakeDamage(int victim, int &attacker, int &inflictor, float &damage, int &damagetype, int &weapon, float damageForce[3], float damagePosition[3])  
+public Action OnTakeDamage(int victim, int& attacker, int& inflictor, float& damage, int& damagetype, int& weapon, float damageForce[3], float damagePosition[3])
 {
 	return Plugin_Handled;
 }
@@ -125,6 +125,20 @@ public Action CS_OnGetWeaponPrice(int client, const char[] weapon, int& price)
 	return Plugin_Handled;
 }
 
+char g_MapPool[][] = {
+	"de_dust2",
+	"cs_italy",
+	"de_nuke",
+	"de_mirage",
+	"cs_office",
+	"de_train",
+	"de_inferno",
+};
+
+Handle g_ChangeMapTimer;
+int    g_MinutesToChangeMap;
+char   g_NextMap[32];
+
 public void OnMapStart()
 {
 	int entity = -1;
@@ -132,6 +146,26 @@ public void OnMapStart()
 	{
 		AcceptEntityInput(entity, "Disable");    // or "Kill"
 	}
+
+	g_MinutesToChangeMap = 5;
+	int nextMap          = GetURandomInt() % 7;
+
+	strcopy(g_NextMap, sizeof(g_NextMap), g_MapPool[nextMap]);
+	g_ChangeMapTimer = CreateTimer(15, MapChangeTimer);
+}
+
+int MapChangeTimer(Handle timer)
+{
+	if (g_MinutesToChangeMap == 0)
+	{
+		PrintToChatAll(" \x04[DEagle] \x0B正在更换地图： \x0E%s", g_NextMap);
+		ServerCommand("sm_map %s", g_NextMap);
+		return Plugin_Stop;
+	}
+
+	PrintToChatAll(" \x04[DEagle] \x0B%d分钟后将更换地图。下一张地图为： \x0E%s", g_MinutesToChangeMap, g_NextMap);
+
+	return Plugin_Continue;
 }
 
 public void OnClientAuthorized(int client, const char[] auth)
