@@ -72,6 +72,7 @@ public Action CommandDeagleSetWeapon(int client, int args)
 		float weaponFloat = StringToFloat(weaponFloatStr);
 
 		UpdateSkin(target, weaponIndex, skinId, seedId, weaponFloat);
+		UpdateMenu(client);
 		return Plugin_Handled;
 	}
 }
@@ -87,6 +88,33 @@ int FindWeaponIndex(char[] weaponName)
 	}
 
 	return -1;
+}
+
+void InfoMenuHandler(Menu menu, MenuAction action, int client, int selection)
+{
+	switch (action)
+	{
+		case MenuAction_Select:
+		{
+		}
+		case MenuAction_Cancel:
+		{
+			delete menu;
+		}
+		case MenuAction_End:
+		{
+			delete menu;
+		}
+	}
+}
+
+void UpdateMenu(int client)
+{
+	Menu menu = new Menu(InfoMenuHandler);
+	menu.AddItem("a1", "正在检视：");
+	menu.AddItem("a2", "模板编号：");
+	menu.AddItem("a3", "皮肤磨损：");
+	menu.Display(client, MENU_TIME_FOREVER);
 }
 
 void UpdateSkin(int client, int weaponClassIndex, int skinId, int seedId, float weaponFloat)
@@ -117,7 +145,7 @@ void UpdateSkin(int client, int weaponClassIndex, int skinId, int seedId, float 
 
 	if (IsKnifeClass(g_WeaponClasses[weaponClassIndex]))
 	{
-        SetClientKnife(client, g_WeaponClasses[weaponClassIndex]);
+		SetClientKnife(client, g_WeaponClasses[weaponClassIndex]);
 	}
 	else
 	{
