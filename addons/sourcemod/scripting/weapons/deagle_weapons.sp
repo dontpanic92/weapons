@@ -72,7 +72,13 @@ public Action CommandDeagleSetWeapon(int client, int args)
 		float weaponFloat = StringToFloat(weaponFloatStr);
 
 		UpdateSkin(target, weaponIndex, skinId, seedId, weaponFloat);
-		UpdateMenu(target, weaponName, seedId, weaponFloat);
+
+		if (args >= 6)
+		{
+			char weaponDisplayName[128];
+			GetCmdArg(5, weaponDisplayName, sizeof(weaponDisplayName));
+			UpdateMenu(target, weaponDisplayName, seedId, weaponFloat);
+		}
 		return Plugin_Handled;
 	}
 }
@@ -117,7 +123,7 @@ void UpdateMenu(int client, char[] weaponName, int seedId, float weaponFloat)
 	char buffer[128];
 	Format(buffer, sizeof(buffer), "模板编号：%d", seedId);
 	menu.AddItem("a2", buffer, ITEMDRAW_DISABLED);
-	
+
 	Format(buffer, sizeof(buffer), "皮肤磨损：%f", weaponFloat);
 	menu.AddItem("a3", buffer, ITEMDRAW_DISABLED);
 
