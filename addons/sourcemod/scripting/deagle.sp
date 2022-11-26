@@ -9,11 +9,11 @@
 
 public Plugin myinfo =
 {
-    name        = "Deagle",
-    author      = "dontpanic",
-    description = "All in one CS:GO weapon skin management",
-    version     = "0.0.1",
-    url         = "https://deagle.club"
+	name        = "Deagle",
+	author      = "dontpanic",
+	description = "All in one CS:GO weapon skin management",
+	version     = "0.0.1",
+	url         = "https://deagle.club"
 };
 
 Database db = null;
@@ -21,50 +21,59 @@ char     g_steamId[MAXPLAYERS + 1][128];
 
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
-    RegPluginLibrary("deagle");
+	RegPluginLibrary("deagle");
 
-    CreateNative("FindTargetBySteam64Id", FindTargetBySteam64Id_Native);
+	CreateNative("FindTargetBySteam64Id", FindTargetBySteam64Id_Native);
 
-    return APLRes_Success;
+	return APLRes_Success;
 }
 
 public void OnPluginStart()
 {
-    Database.Connect(SQLConnectCallback, "csgodb");
+	Database.Connect(SQLConnectCallback, "csgodb");
 
-    HookEvent("player_spawned", Player_Activated, EventHookMode_Post);
+	HookEvent("player_spawned", Player_Activated, EventHookMode_Post);
 }
 
 Handle g_Cvar_bot_quota = INVALID_HANDLE;
-int g_bot_quota;
-int g_max_players;
+int    g_bot_quota;
+int    g_max_players;
 
-public void OnConfigsExecuted(){
-    g_Cvar_bot_quota = FindConVar("bot_quota");
-    g_bot_quota = GetConVarInt(g_Cvar_bot_quota);
-    g_max_players = GetMaxClients();
+public void OnConfigsExecuted()
+{
+	g_Cvar_bot_quota = FindConVar("bot_quota");
+	g_bot_quota      = GetConVarInt(g_Cvar_bot_quota);
+	g_max_players    = GetMaxClients();
 }
 
-public void OnClientPutInServer(int client){
-    if(!IsFakeClient(client))
-        return;
-        
-    if(g_bot_quota < GetConVarInt(g_Cvar_bot_quota))
-        SetConVarInt(g_Cvar_bot_quota, g_bot_quota);
-    
-    int i, count;
-    for(i = 1; i<=g_max_players; i++)
-        if(IsClientInGame(i) && GetClientTeam(i)>1)
-            count++;
-            
-    if(count<=g_bot_quota)
-        return;
-    
-    char name[32];
-    if(!GetClientName(client, name, 31))
-        return;
-    ServerCommand("bot_kick %s", name);
-}  
+public void OnClientPutInServer(int client)
+{
+	SDKHook(client, SDKHook_OnTakeDamage, OnTakeDamage);
+	if (!IsFakeClient(client))
+		return;
+
+	if (g_bot_quota < GetConVarInt(g_Cvar_bot_quota))
+		SetConVarInt(g_Cvar_bot_quota, g_bot_quota);
+
+	int i, count;
+	for (i = 1; i <= g_max_players; i++)
+		if (IsClientInGame(i) && GetClientTeam(i) > 1)
+			count++;
+
+	if (count <= g_bot_quota)
+		return;
+
+	char name[32];
+	if (!GetClientName(client, name, 31))
+		return;
+	ServerCommand("bot_kick %s", name);
+}
+
+public Action : OnTakeDamage(client, &attacker, &inflictor, &Float
+                      : damage, &damagetype)
+{
+	return Plugin_Handled;
+}
 
 /*
 default (white): \x01
@@ -83,115 +92,112 @@ lightgreen: \x05
 green: \x04
 lime: \x06
 grey: \x08
-grey2: \x0D 
+grey2: \x0D
  */
-
 public Action Player_Activated(Event event, const char[] name, bool dontBroadcast)
 {
-    int client = GetClientOfUserId(GetEventInt(event, "userid"));
-    
-    char steamid[128];
-    if (GetClientAuthId(client, AuthId_SteamID64, steamid, sizeof(steamid)))
-    {
-        strcopy(g_steamId[client], 128, steamid);
+	int client = GetClientOfUserId(GetEventInt(event, "userid"));
 
-        char query[255];
-        FormatEx(query, sizeof(query), "INSERT INTO active_users (steamid, serverip) VALUES ('%s', 'unknown')", steamid);
-        db.Query(T_InsertCallback, query);
-    }
-    else
-    {
-        LogError("Cannot get user auth id");
-    }
+	char steamid[128];
+	if (GetClientAuthId(client, AuthId_SteamID64, steamid, sizeof(steamid)))
+	{
+		strcopy(g_steamId[client], 128, steamid);
 
-    PrintToChatAll(" \x04[DEagle] \x0B欢迎来到 DEagle 社区服，访问 \x04https://dealge.club \x0E一键检视 Buff/UU 在售饰品");
-    return Plugin_Handled;
+		char query[255];
+		FormatEx(query, sizeof(query), "INSERT INTO active_users (steamid, serverip) VALUES ('%s', 'unknown')", steamid);
+		db.Query(T_InsertCallback, query);
+	}
+	else
+	{
+		LogError("Cannot get user auth id");
+	}
+
+	PrintToChatAll(" \x04[DEagle] \x0B欢迎来到 DEagle 社区服，访问 \x04https://dealge.club \x0E一键检视 Buff/UU 在售饰品");
+	return Plugin_Handled;
 }
-
 
 /*Action CS_OnCSWeaponDrop(int client, int weaponIndex, bool donated)
 {
     return Plugin_Stop;
 }*/
-
 public Action CS_OnGetWeaponPrice(int client, const char[] weapon, int& price)
 {
-    price = 0;
-    return Plugin_Handled;
+	price = 0;
+	return Plugin_Handled;
 }
 
 public void OnMapStart()
 {
-    int entity = -1;
-    while ((entity = FindEntityByClassname(entity, "func_bomb_target")) != -1)
-    {
-        AcceptEntityInput(entity, "Disable"); // or "Kill"
-    }
-}  
+	int entity = -1;
+	while ((entity = FindEntityByClassname(entity, "func_bomb_target")) != -1)
+	{
+		AcceptEntityInput(entity, "Disable");    // or "Kill"
+	}
+}
 
 public void OnClientAuthorized(int client, const char[] auth)
 {
-    /*char steamid[128];
-    if (GetClientAuthId(client, AuthId_SteamID64, steamid, sizeof(steamid)))
-    {
-        strcopy(g_steamId[client], 128, steamid);
+	/*char steamid[128];
+	if (GetClientAuthId(client, AuthId_SteamID64, steamid, sizeof(steamid)))
+	{
+	    strcopy(g_steamId[client], 128, steamid);
 
-        char query[255];
-        FormatEx(query, sizeof(query), "INSERT INTO active_users (steamid, serverip) VALUES ('%s', 'unknown')", steamid);
-        db.Query(T_InsertCallback, query);
-    }
-    else
-    {
-        LogError("Cannot get user auth id");
-    }*/
+	    char query[255];
+	    FormatEx(query, sizeof(query), "INSERT INTO active_users (steamid, serverip) VALUES ('%s', 'unknown')", steamid);
+	    db.Query(T_InsertCallback, query);
+	}
+	else
+	{
+	    LogError("Cannot get user auth id");
+	}*/
 }
 
 public void T_InsertCallback(Database database, DBResultSet results, const char[] error, any pack)
 {
-    if (results == null)
-    {
-        LogError("Insert Query failed!");
-    }
+	if (results == null)
+	{
+		LogError("Insert Query failed!");
+	}
 }
 
 public void OnClientDisconnect(int client)
 {
-    char query[255];
-    FormatEx(query, sizeof(query), "DELETE FROM active_users WHERE steamid = '%s'", g_steamId[client]);
-    db.Query(T_DeleteCallback, query);
+	char query[255];
+	FormatEx(query, sizeof(query), "DELETE FROM active_users WHERE steamid = '%s'", g_steamId[client]);
+	db.Query(T_DeleteCallback, query);
 }
 
 public void T_DeleteCallback(Database database, DBResultSet results, const char[] error, any pack)
 {
-    if (results == null)
-    {
-        LogError("Delete active user failed!");
-    }
+	if (results == null)
+	{
+		LogError("Delete active user failed!");
+	}
 }
 
 public void SQLConnectCallback(Database database, const char[] error, any data)
 {
-    if (database == null)
-    {
-        LogError("Database failure: %s", error);
-    }
-    else
-    {
-        db = database;
-    }
+	if (database == null)
+	{
+		LogError("Database failure: %s", error);
+	}
+	else
+	{
+		db = database;
+	}
 }
 
 public int FindTargetBySteam64Id_Native(Handle plugin, int numparams)
 {
-    char steamid[128];
-    GetNativeString(1, steamid, 128);
-    for (int i = 1; i < MAXPLAYERS + 1; i++)
-    {
-        if (strcmp(steamid, g_steamId[i]) == 0)
-        {
-            return i;
-        }
-    }
+	char steamid[128];
+	GetNativeString(1, steamid, 128);
+	for (int i = 1; i < MAXPLAYERS + 1; i++)
+	{
+		if (strcmp(steamid, g_steamId[i]) == 0)
+		{
+			return i;
+		}
+	}
 
-    return -1;
+	return -1;
 }
