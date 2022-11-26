@@ -109,7 +109,7 @@ int InfoMenuHandler(Menu menu, MenuAction action, int client, int selection)
 	return 0;
 }
 
-void UpdateMenu(int client, char weaponName[], int seedId, float weaponFloat)
+void UpdateMenu(int client, char[] weaponName, int seedId, float weaponFloat)
 {
 	Menu menu = new Menu(InfoMenuHandler);
 	menu.SetTitle("正在检视：%s", weaponName);
