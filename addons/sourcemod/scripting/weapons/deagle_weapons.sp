@@ -99,7 +99,6 @@ int InfoMenuHandler(Menu menu, MenuAction action, int client, int selection)
 		}
 		case MenuAction_Cancel:
 		{
-			delete menu;
 		}
 		case MenuAction_End:
 		{
@@ -117,7 +116,7 @@ void UpdateMenu(int client)
 	menu.AddItem("a2", "模板编号：");
 	menu.AddItem("a3", "皮肤磨损：");
 	menu.ExitBackButton = true;
-	
+
 	menu.Display(client, MENU_TIME_FOREVER);
 }
 
