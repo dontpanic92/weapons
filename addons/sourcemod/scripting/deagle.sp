@@ -35,6 +35,26 @@ public void OnPluginStart()
     HookEvent("player_spawned", Player_Activated, EventHookMode_Post);
 }
 
+/*
+default (white): \x01
+teamcolour (will be purple if message from server): \x03
+red: \x07
+lightred: \x0F
+darkred: \x02
+bluegrey: \x0A
+blue: \x0B
+darkblue: \x0C
+purple: \x03
+orchid: \x0E
+yellow: \x09
+gold: \x10
+lightgreen: \x05
+green: \x04
+lime: \x06
+grey: \x08
+grey2: \x0D 
+ */
+
 public Action Player_Activated(Event event, const char[] name, bool dontBroadcast)
 {
     int client = GetClientOfUserId(GetEventInt(event, "userid"));
@@ -53,7 +73,7 @@ public Action Player_Activated(Event event, const char[] name, bool dontBroadcas
         LogError("Cannot get user auth id");
     }
 
-    PrintToChatAll(" \x05[DEagle] \x0B欢迎来到 DEagle 社区服，访问 \x05 https://dealge.club \x0B一键检视 Buff/UU 在售饰品");
+    PrintToChatAll(" \x04[DEagle] \x0B欢迎来到 \x0EDEagle 社区服\x0B，访问 \x04 https://dealge.club \x0B一键检视 Buff/UU 在售饰品");
     return Plugin_Handled;
 }
 
