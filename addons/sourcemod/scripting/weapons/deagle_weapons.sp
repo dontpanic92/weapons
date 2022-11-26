@@ -25,7 +25,7 @@ public Action CommandDeagleTest(int client, int args)
 		}
 	}
 
-	UpdateSkin(target, 0, 51, 0, 0);
+	UpdateSkin(target, 0, 51, 0, 0.0);
 	return Plugin_Handled;
 }
 
@@ -90,7 +90,7 @@ int FindWeaponIndex(char[] weaponName)
 	return -1;
 }
 
-void InfoMenuHandler(Menu menu, MenuAction action, int client, int selection)
+int InfoMenuHandler(Menu menu, MenuAction action, int client, int selection)
 {
 	switch (action)
 	{
