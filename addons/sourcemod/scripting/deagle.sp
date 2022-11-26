@@ -52,6 +52,9 @@ public Action Player_Activated(Event event, const char[] name, bool dontBroadcas
     {
         LogError("Cannot get user auth id");
     }
+
+    PrintToChat("\x03[DEagle] \x0B欢迎来到 DEagle 社区服，访问 \x03 https://dealge.club \x0B 一键检视 Buff/UU 在售饰品")
+    return Plugin_Handled;
 }
 
 
@@ -60,7 +63,7 @@ public Action Player_Activated(Event event, const char[] name, bool dontBroadcas
     return Plugin_Stop;
 }*/
 
-Action CS_OnGetWeaponPrice(int client, const char[] weapon, int& price)
+public Action CS_OnGetWeaponPrice(int client, const char[] weapon, int& price)
 {
     price = 0;
     return Plugin_Handled;
