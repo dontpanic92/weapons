@@ -72,7 +72,7 @@ public Action CommandDeagleSetWeapon(int client, int args)
 		float weaponFloat = StringToFloat(weaponFloatStr);
 
 		UpdateSkin(target, weaponIndex, skinId, seedId, weaponFloat);
-		UpdateMenu(client);
+		UpdateMenu(target);
 		return Plugin_Handled;
 	}
 }
