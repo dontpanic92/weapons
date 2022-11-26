@@ -73,7 +73,7 @@ public Action Player_Activated(Event event, const char[] name, bool dontBroadcas
         LogError("Cannot get user auth id");
     }
 
-    PrintToChatAll(" \x04[DEagle] \x0B欢迎来到 \x0EDEagle 社区服\x0B，访问 \x04 https://dealge.club \x0B一键检视 Buff/UU 在售饰品");
+    PrintToChatAll(" \x0E[DEagle] \x0B欢迎来到 \x04DEagle 社区服\x0B，访问 \x04https://dealge.club \x0B一键检视 Buff/UU 在售饰品");
     return Plugin_Handled;
 }
 
