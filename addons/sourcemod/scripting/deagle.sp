@@ -69,8 +69,7 @@ public void OnClientPutInServer(int client)
 	ServerCommand("bot_kick %s", name);
 }
 
-public Action : OnTakeDamage(client, &attacker, &inflictor, &Float
-                      : damage, &damagetype)
+public Action OnTakeDamage(int victim, int &attacker, int &inflictor, float &damage, int &damagetype, int &weapon, float damageForce[3], float damagePosition[3])  
 {
 	return Plugin_Handled;
 }
