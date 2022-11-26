@@ -111,7 +111,7 @@ public Action Player_Activated(Event event, const char[] name, bool dontBroadcas
 		LogError("Cannot get user auth id");
 	}
 
-	PrintToChatAll(" \x04[DEagle] \x0B欢迎来到 DEagle 社区服，访问 \x06https://dealge.club \x04一键检视 Buff/UU 在售饰品");
+	PrintToChatAll(" \x04[DEagle] \x0B欢迎来到 DEagle 社区服，访问 \x10https://dealge.club \x04一键检视 Buff/UU 在售饰品");
 	return Plugin_Handled;
 }
 
@@ -148,7 +148,7 @@ public void OnMapStart()
 		AcceptEntityInput(entity, "Disable");    // or "Kill"
 	}
 
-	g_SecondsToChangeMap = 120;
+	g_SecondsToChangeMap = 55 * 60;
 	int nextMap          = GetURandomInt() % 7;
 
 	strcopy(g_NextMap, sizeof(g_NextMap), g_MapPool[nextMap]);
@@ -157,16 +157,16 @@ public void OnMapStart()
 
 Action MapChangeTimer(Handle timer)
 {
-	if (g_SecondsToChangeMap < 0)
+	if (g_SecondsToChangeMap <= 0)
 	{
 		PrintToChatAll(" \x04[DEagle] \x0B正在更换地图： \x04%s", g_NextMap);
 		ServerCommand("sm_map %s", g_NextMap);
 		return Plugin_Stop;
 	}
 
-	if (g_SecondsToChangeMap >= 60 && g_SecondsToChangeMap % 60 == 0) {
+	if (g_SecondsToChangeMap >= 60 && g_SecondsToChangeMap <= 10 * 60 && g_SecondsToChangeMap % 60 == 0) {
 		PrintToChatAll(" \x04[DEagle] \x0B%d分钟后将更换地图。下一张地图为： \x04%s", g_SecondsToChangeMap / 60, g_NextMap);
-	} else if (g_SecondsToChangeMap < 60) {
+	} else if (g_SecondsToChangeMap <= 30) {
 		PrintToChatAll(" \x04[DEagle] \x0B即将更换地图。下一张地图为： \x04%s", g_NextMap);
 	}
 
