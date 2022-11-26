@@ -152,7 +152,7 @@ public void OnMapStart()
 	int nextMap          = GetURandomInt() % 7;
 
 	strcopy(g_NextMap, sizeof(g_NextMap), g_MapPool[nextMap]);
-	g_ChangeMapTimer = CreateTimer((float)g_ChangeMapTimerInterval, MapChangeTimer, 0, TIMER_REPEAT);
+	g_ChangeMapTimer = CreateTimer(float(g_ChangeMapTimerInterval), MapChangeTimer, 0, TIMER_REPEAT);
 }
 
 Action MapChangeTimer(Handle timer)
