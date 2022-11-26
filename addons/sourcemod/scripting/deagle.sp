@@ -39,13 +39,13 @@ Handle g_Cvar_bot_quota = INVALID_HANDLE;
 int g_bot_quota;
 int g_max_players;
 
-public OnConfigsExecuted(){
+public void OnConfigsExecuted(){
     g_Cvar_bot_quota = FindConVar("bot_quota");
     g_bot_quota = GetConVarInt(g_Cvar_bot_quota);
     g_max_players = GetMaxClients();
 }
 
-public OnClientPutInServer(client){
+public void OnClientPutInServer(client){
     if(!IsFakeClient(client))
         return;
         
