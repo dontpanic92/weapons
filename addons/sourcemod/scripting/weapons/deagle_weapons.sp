@@ -118,9 +118,12 @@ int InfoMenuHandler(Menu menu, MenuAction action, int client, int selection)
 void UpdateMenu(int client, char[] weaponName, int seedId, float weaponFloat)
 {
 	Menu menu = new Menu(InfoMenuHandler);
-	menu.SetTitle("正在检视：%s", weaponName);
+	menu.SetTitle("DEagle 社区服");
 
 	char buffer[128];
+	Format(buffer, sizeof(buffer), "正在检视：%s", weaponName);
+	menu.AddItem("a1", buffer, ITEMDRAW_DISABLED);
+
 	Format(buffer, sizeof(buffer), "模板编号：%d", seedId);
 	menu.AddItem("a2", buffer, ITEMDRAW_DISABLED);
 
