@@ -105,8 +105,8 @@ public Action Player_Activated(Event event, const char[] name, bool dontBroadcas
 	{
 		strcopy(g_steamId[client], 128, steamid);
 
-		int token1 = GetURandomInt();
-		int token2 = GetURandomInt();
+		int  token1 = GetURandomInt();
+		int  token2 = GetURandomInt();
 		char token[32];
 		FormatEx(token, sizeof(token), "%x%x", token1, token2);
 
@@ -127,9 +127,22 @@ public Action Player_Activated(Event event, const char[] name, bool dontBroadcas
 
 public Action CommandShowWxQrCode(int client, int args)
 {
-	char uri[128];
-	FormatEx(uri, sizeof(uri), "https://deagle.club/api/wx/qrcode?token=%s", g_userToken[client]);
-	ShowMOTDPanel(client, "微信小程序", uri, MOTDPANEL_TYPE_URL);
+	// char uri[128];
+	// FormatEx(uri, sizeof(uri), "http://deagle.club/api/wx/qrcode?token=%s", g_userToken[client]);
+	// ShowMOTDPanel(client, "微信小程序", uri, MOTDPANEL_TYPE_URL);
+
+	Event newevent_message = CreateEvent("cs_win_panel_round");
+	newevent_message.SetString("funfact_token", "message here");
+
+	// for (int z = 1; z <= MaxClients; z++)
+	{
+		if (IsClientInGame(client) && !IsFakeClient(client))
+		{
+			newevent_message.FireToClient(client);
+		}
+	}
+	
+	event_fake.Cancel();
 
 	return Plugin_Handled;
 }
