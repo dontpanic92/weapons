@@ -74,6 +74,12 @@ public Action ChatListener(int client, const char[] command, int args)
 	char msg[128];
 	GetCmdArgString(msg, sizeof(msg));
 	StripQuotes(msg);
+
+	if (StrEqual(msg, ".ws") || StrEqual(msg, ".knife"))
+	{
+		CommandKnife(client);
+	}
+
 	if (StrEqual(msg, "!ws") || StrEqual(msg, "!knife") || StrEqual(msg, "!wslang") || StrContains(msg, "!nametag") == 0 || StrContains(msg, "!seed") == 0 || StrContains(msg, "!wsreset") == 0)
 	{
 		return Plugin_Handled;
