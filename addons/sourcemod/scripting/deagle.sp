@@ -137,20 +137,9 @@ public Action CommandShowWxQrCode(int client, int args)
 
 void ShowMOTDScreen(int client, char[] url, bool hidden)
 {
-	if (!IsValidClient(client))
-		return;
-	
 	Handle kv = CreateKeyValues("data");
 
-	if (StrEqual(gameDir, "left4dead") || StrEqual(gameDir, "left4dead2"))
-		KvSetString(kv, "cmd", "closed_htmlpage");
-	else
-		KvSetNum(kv, "cmd", 5);
-
-	if (StrEqual(gameDir, "tf") && g_playerMidgame[client])
-	{
-		//KvSetNum(kv, "customsvr", 1);
-	}
+	KvSetNum(kv, "cmd", 5);
 
 	KvSetString(kv, "msg", url);
 	KvSetString(kv, "title", "test");
