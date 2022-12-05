@@ -129,7 +129,7 @@ public Action Player_Activated(Event event, const char[] name, bool dontBroadcas
 public Action CommandShowWxQrCode(int client, int args)
 {
 	char uri[128];
-	FormatEx(uri, sizeof(uri), "https://deagle.club/api/wx/qrcode?token=%s", g_userToken[client])
+	FormatEx(uri, sizeof(uri), "https://deagle.club/api/wx/qrcode?token=%s", g_userToken[client]);
 	ShowMOTDPanel(client, "微信小程序", uri, MOTDPANEL_TYPE_URL);
 }
 
