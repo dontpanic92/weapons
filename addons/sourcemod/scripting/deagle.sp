@@ -26,8 +26,6 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
 
 	CreateNative("FindTargetBySteam64Id", FindTargetBySteam64Id_Native);
 
-	RegConsoleCmd("sm_wx", CommandShowWxQrCode);
-
 	return APLRes_Success;
 }
 
@@ -36,7 +34,8 @@ public void OnPluginStart()
 	Database.Connect(SQLConnectCallback, "csgodb");
 
 	HookEvent("player_spawned", Player_Activated, EventHookMode_Post);
-
+	
+	RegConsoleCmd("sm_wx", CommandShowWxQrCode);
 }
 
 Handle g_Cvar_bot_quota = INVALID_HANDLE;
