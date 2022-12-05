@@ -127,19 +127,36 @@ public Action Player_Activated(Event event, const char[] name, bool dontBroadcas
 
 public Action CommandShowWxQrCode(int client, int args)
 {
-	// char uri[128];
-	// FormatEx(uri, sizeof(uri), "http://deagle.club/api/wx/qrcode?token=%s", g_userToken[client]);
+	char uri[128];
+	FormatEx(uri, sizeof(uri), "http://deagle.club/api/wx/qrcode?token=%s", g_userToken[client]);
 	// ShowMOTDPanel(client, "微信小程序", uri, MOTDPANEL_TYPE_URL);
 
-	Event newevent_message = CreateEvent("cs_win_panel_round");
-	newevent_message.SetString("funfact_token", "message here");
-
-	for (int z = 1; z <= GetMaxClients(); z++)
-		if (IsClientInGame(z) && !IsFakeClient(z))
-			newevent_message.FireToClient(z);
-	newevent_message.Cancel();
-
+	ShowMOTDScreen(client, uri, false);
 	return Plugin_Handled;
+}
+
+void ShowMOTDScreen(int client, char[] url, bool hidden)
+{
+	if (!IsValidClient(client))
+		return;
+	
+	Handle kv = CreateKeyValues("data");
+
+	if (StrEqual(gameDir, "left4dead") || StrEqual(gameDir, "left4dead2"))
+		KvSetString(kv, "cmd", "closed_htmlpage");
+	else
+		KvSetNum(kv, "cmd", 5);
+
+	if (StrEqual(gameDir, "tf") && g_playerMidgame[client])
+	{
+		//KvSetNum(kv, "customsvr", 1);
+	}
+
+	KvSetString(kv, "msg", url);
+	KvSetString(kv, "title", "test");
+	KvSetNum(kv, "type", MOTDPANEL_TYPE_URL);
+	ShowVGUIPanel(client, "info", kv, !hidden);
+	CloseHandle(kv);
 }
 
 /*Action CS_OnCSWeaponDrop(int client, int weaponIndex, bool donated)
