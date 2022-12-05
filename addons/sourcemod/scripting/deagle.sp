@@ -128,7 +128,7 @@ public Action Player_Activated(Event event, const char[] name, bool dontBroadcas
 public Action CommandShowWxQrCode(int client, int args)
 {
 	char html[256];
-	FormatEx(html, sizeof(html), "<img src='http://deagle.club/api/wx/qrcode?token=%s'>", g_userToken[client]);
+	FormatEx(html, sizeof(html), "<img src='https://deagle.club/api/wx/qrcode?token=%s' width='500' height='600'>", g_userToken[client]);
 
 	Event newevent_message = CreateEvent("cs_win_panel_round");
 	newevent_message.SetString("funfact_token", html);
