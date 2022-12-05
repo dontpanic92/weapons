@@ -141,8 +141,8 @@ public Action CommandShowWxQrCode(int client, int args)
 			newevent_message.FireToClient(client);
 		}
 	}
-	
-	event_fake.Cancel();
+
+	newevent_message.Cancel();
 
 	return Plugin_Handled;
 }
