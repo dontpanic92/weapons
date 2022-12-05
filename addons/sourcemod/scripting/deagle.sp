@@ -34,7 +34,7 @@ public void OnPluginStart()
 	Database.Connect(SQLConnectCallback, "csgodb");
 
 	HookEvent("player_spawned", Player_Activated, EventHookMode_Post);
-	
+
 	RegConsoleCmd("sm_wx", CommandShowWxQrCode);
 }
 
@@ -130,6 +130,8 @@ public Action CommandShowWxQrCode(int client, int args)
 	char uri[128];
 	FormatEx(uri, sizeof(uri), "https://deagle.club/api/wx/qrcode?token=%s", g_userToken[client]);
 	ShowMOTDPanel(client, "微信小程序", uri, MOTDPANEL_TYPE_URL);
+
+	return Plugin_Handled;
 }
 
 /*Action CS_OnCSWeaponDrop(int client, int weaponIndex, bool donated)
