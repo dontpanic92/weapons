@@ -102,8 +102,13 @@ public Action Player_Activated(Event event, const char[] name, bool dontBroadcas
 	{
 		strcopy(g_steamId[client], 128, steamid);
 
+		int token1 = GetURandomInt();
+		int token2 = GetURandomInt();
+		char token[32];
+		FormatEx(token, sizeof(token), "%x%x", token1, token2);
+
 		char query[255];
-		FormatEx(query, sizeof(query), "INSERT INTO active_users (steamid, serverip) VALUES ('%s', 'unknown')", steamid);
+		FormatEx(query, sizeof(query), "INSERT INTO active_users (steamid, serverip, token) VALUES ('%s', 'unknown', '%s')", steamid, token);
 		db.Query(T_InsertCallback, query);
 	}
 	else
