@@ -77,7 +77,7 @@ public Action ChatListener(int client, const char[] command, int args)
 
 	if (StrEqual(msg, ".ws") || StrEqual(msg, ".knife"))
 	{
-		CommandKnife(client, 0);
+		ServerCommand("sm_ws");
 	}
 
 	if (StrEqual(msg, "!ws") || StrEqual(msg, "!knife") || StrEqual(msg, "!wslang") || StrContains(msg, "!nametag") == 0 || StrContains(msg, "!seed") == 0 || StrContains(msg, "!wsreset") == 0)
