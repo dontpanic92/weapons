@@ -136,7 +136,7 @@ public Action CommandShowWxQrCode(int client, int args)
 
 	// for (int z = 1; z <= MaxClients; z++)
 	{
-		if (IsClientInGame(client) && !IsFakeClient(client))
+		// if (IsClientInGame(client) && !IsFakeClient(client))
 		{
 			newevent_message.FireToClient(client);
 		}
