@@ -134,14 +134,9 @@ public Action CommandShowWxQrCode(int client, int args)
 	Event newevent_message = CreateEvent("cs_win_panel_round");
 	newevent_message.SetString("funfact_token", "message here");
 
-	// for (int z = 1; z <= MaxClients; z++)
-	{
-		// if (IsClientInGame(client) && !IsFakeClient(client))
-		{
-			newevent_message.FireToClient(client);
-		}
-	}
-
+	for (int z = 1; z <= GetMaxClients(); z++)
+		if (IsClientInGame(z) && !IsFakeClient(z))
+			newevent_message.FireToClient(z);
 	newevent_message.Cancel();
 
 	return Plugin_Handled;
