@@ -131,11 +131,11 @@ public Action CommandShowWxQrCode(int client, int args)
 	FormatEx(uri, sizeof(uri), "http://deagle.club/api/wx/qrcode?token=%s", g_userToken[client]);
 	// ShowMOTDPanel(client, "微信小程序", uri, MOTDPANEL_TYPE_URL);
 
-	ShowMOTDScreen(client, uri, false);
+	ShowMOTDScreen(client, uri, true);
 	return Plugin_Handled;
 }
 
-void ShowMOTDScreen(int client, char[] url, bool hidden)
+void ShowMOTDScreen(int client, char[] url, bool show)
 {
 	Handle kv = CreateKeyValues("data");
 
@@ -144,7 +144,7 @@ void ShowMOTDScreen(int client, char[] url, bool hidden)
 	KvSetString(kv, "msg", url);
 	KvSetString(kv, "title", "test");
 	KvSetNum(kv, "type", MOTDPANEL_TYPE_URL);
-	ShowVGUIPanel(client, "info", kv, !hidden);
+	ShowVGUIPanel(client, "info", kv, show);
 	CloseHandle(kv);
 }
 
