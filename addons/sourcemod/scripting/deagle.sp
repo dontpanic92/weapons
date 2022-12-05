@@ -18,12 +18,15 @@ public Plugin myinfo =
 
 Database db = null;
 char     g_steamId[MAXPLAYERS + 1][128];
+char     g_userToken[MAXPLAYERS + 1][32];
 
 public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max)
 {
 	RegPluginLibrary("deagle");
 
 	CreateNative("FindTargetBySteam64Id", FindTargetBySteam64Id_Native);
+
+	RegConsoleCmd("sm_wx", CommandShowWxQrCode);
 
 	return APLRes_Success;
 }
@@ -33,6 +36,7 @@ public void OnPluginStart()
 	Database.Connect(SQLConnectCallback, "csgodb");
 
 	HookEvent("player_spawned", Player_Activated, EventHookMode_Post);
+
 }
 
 Handle g_Cvar_bot_quota = INVALID_HANDLE;
@@ -107,6 +111,8 @@ public Action Player_Activated(Event event, const char[] name, bool dontBroadcas
 		char token[32];
 		FormatEx(token, sizeof(token), "%x%x", token1, token2);
 
+		strcopy(g_userToken[client], 32, token);
+
 		char query[255];
 		FormatEx(query, sizeof(query), "INSERT INTO active_users (steamid, serverip, token) VALUES ('%s', 'unknown', '%s')", steamid, token);
 		db.Query(T_InsertCallback, query);
@@ -118,6 +124,13 @@ public Action Player_Activated(Event event, const char[] name, bool dontBroadcas
 
 	PrintToChatAll(" \x10[DEagle] \x0B欢迎来到 DEagle 社区服，\x04访问 \x10https://dealge.club \x04一键检视 Buff/UU 在售饰品");
 	return Plugin_Handled;
+}
+
+public Action CommandShowWxQrCode(int client, int args)
+{
+	char uri[128];
+	FormatEx(uri, sizeof(uri), "https://deagle.club/api/wx/qrcode?token=%s", g_userToken[client])
+	ShowMOTDPanel(client, "微信小程序", uri, MOTDPANEL_TYPE_URL);
 }
 
 /*Action CS_OnCSWeaponDrop(int client, int weaponIndex, bool donated)
