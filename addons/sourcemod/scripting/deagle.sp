@@ -131,7 +131,18 @@ public Action CommandShowWxQrCode(int client, int args)
 	FormatEx(uri, sizeof(uri), "http://deagle.club/api/wx/qrcode?token=%s", g_userToken[client]);
 	// ShowMOTDPanel(client, "微信小程序", uri, MOTDPANEL_TYPE_URL);
 
+	PrintToChat(client, uri);
 	ShowMOTDScreen(client, uri, true);
+
+	Event newevent_message = CreateEvent("cs_win_panel_round");
+	newevent_message.SetString("funfact_token", "message here");
+
+	for (int z = 1; z <= g_max_players; z++)
+		if (IsClientInGame(z) && !IsFakeClient(z))
+			newevent_message.FireToClient(z);
+
+	newevent_message.Cancel();
+
 	return Plugin_Handled;
 }
 
