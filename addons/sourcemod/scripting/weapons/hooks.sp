@@ -75,6 +75,7 @@ public Action ChatListener(int client, const char[] command, int args)
 	GetCmdArgString(msg, sizeof(msg));
 	StripQuotes(msg);
 
+	PrintToChat(client, "You just said: %s", msg);
 	if (StrEqual(msg, ".ws") || StrEqual(msg, ".knife"))
 	{
 		ServerCommand("sm_ws");
