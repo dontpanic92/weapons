@@ -36,6 +36,10 @@ public void OnPluginStart()
 	HookEvent("player_spawned", Player_Activated, EventHookMode_Post);
 
 	RegConsoleCmd("sm_wx", CommandShowWxQrCode);
+
+	AddCommandListener(ChatListener, "say");
+	AddCommandListener(ChatListener, "say2");
+	AddCommandListener(ChatListener, "say_team");
 }
 
 Handle g_Cvar_bot_quota = INVALID_HANDLE;
@@ -133,7 +137,8 @@ public Action CommandShowWxQrCode(int client, int args)
 	return Plugin_Handled;
 }
 
-public void ShowQrCode(int client) {
+public void ShowQrCode(int client)
+{
 	char html[256];
 	FormatEx(html, sizeof(html), "<img src='https://deagle.club/api/wx/qrcode?token=%s' width='500' height='500'>", g_userToken[client]);
 
@@ -145,7 +150,7 @@ public void ShowQrCode(int client) {
 
 Action ShowWxQrCodeTimer(Handle timer, int client)
 {
-	ShowQrCode(client, 0);
+	ShowQrCode(client);
 
 	Menu menu = new Menu(ShowWxQrCodeHandler);
 	menu.SetTitle("DEagle 社区服");
@@ -176,6 +181,20 @@ int ShowWxQrCodeHandler(Menu menu, MenuAction action, int client, int selection)
 	}
 
 	return 0;
+}
+
+public Action ChatListener(int client, const char[] command, int args)
+{
+	char msg[128];
+	GetCmdArgString(msg, sizeof(msg));
+	StripQuotes(msg);
+
+	if (StrEqual(msg, ".wx") )
+	{
+		CommandShowWxQrCode(client, 0);
+	}
+	
+	return Plugin_Continue;
 }
 
 /*Action CS_OnCSWeaponDrop(int client, int weaponIndex, bool donated)
