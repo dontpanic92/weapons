@@ -121,7 +121,7 @@ public Action Player_Activated(Event event, const char[] name, bool dontBroadcas
 		LogError("Cannot get user auth id");
 	}
 
-	PrintToChatAll(" \x10[DEagle] \x0B欢迎来到 DEagle 社区服，\x04访问 \x10https://dealge.club \x04一键检视 Buff/UU 在售饰品");
+	PrintToChatAll(" \x10[DEagle] \x0B欢迎来到 DEagle 社区服，\x04输入 \x10.wx 扫描二维码打开微信小程序， \x04快速检视 Buff/UU 在售饰品！");
 	return Plugin_Handled;
 }
 
@@ -136,9 +136,9 @@ public Action CommandShowWxQrCode(int client, int args)
 	Event newevent_message = CreateEvent("cs_win_panel_round");
 	newevent_message.SetString("funfact_token", html);
 
-	for (int z = 1; z <= g_max_players; z++)
-		if (IsClientInGame(z) && !IsFakeClient(z))
-			newevent_message.FireToClient(z);
+	// for (int z = 1; z <= g_max_players; z++)
+	//	if (IsClientInGame(z) && !IsFakeClient(z))
+	newevent_message.FireToClient(client);
 
 	newevent_message.Cancel();
 
@@ -203,7 +203,7 @@ Action MapChangeTimer(Handle timer)
 
 	if (g_SecondsToChangeMap % 60 == 0)
 	{
-		PrintToChatAll(" \x10[DEagle] \x0B欢迎来到 DEagle 社区服，\x04访问 \x10https://dealge.club \x04一键检视 Buff/UU 在售饰品");
+		PrintToChatAll(" \x10[DEagle] \x0B欢迎来到 DEagle 社区服，\x04输入 \x10.wx 扫描二维码打开微信小程序， \x04快速检视 Buff/UU 在售饰品！");
 	}
 
 	g_SecondsToChangeMap = g_SecondsToChangeMap - g_ChangeMapTimerInterval;
