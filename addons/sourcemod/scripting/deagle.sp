@@ -149,7 +149,7 @@ public void ShowQrCode(int client, bool clear)
 		FormatEx(html, sizeof(html), "");
 	}
 	else {
-		FormatEx(html, sizeof(html), "<div width='500' height='600'><div>请使用微信扫描二维码</div><div><img src='https://deagle.club/api/wx/qrcode?token=%s' width='500' height='500'></div></div>", g_userToken[client]);
+		FormatEx(html, sizeof(html), "<div width='500' height='600'><div width='500'>请使用微信扫描二维码</div><div><img src='https://deagle.club/api/wx/qrcode?token=%s' width='500' height='500'></div></div>", g_userToken[client]);
 	}
 
 	PrintToServer("client: %d clear: %d", client, clear);
