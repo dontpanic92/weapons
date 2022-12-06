@@ -8,9 +8,9 @@ public Action CommandDeagleGloveTest(int client, int args)
 	return Plugin_Handled;
 }
 
-/*public Action CommandDeagleSetGlove(int client, int args)
+public Action CommandDeagleSetGloves(int client, int args)
 {
-	PrintToServer("[DEagle] CommandDeagleSetGlove");
+	PrintToServer("[DEagle] CommandDeagleSetGloves");
 
 	if (client > 0)
 	{
@@ -29,18 +29,13 @@ public Action CommandDeagleGloveTest(int client, int args)
 			return Plugin_Handled;
 		}
 
-		char weaponName[64];
-		GetCmdArg(2, weaponName, sizeof(weaponName));
-		int weaponIndex = FindWeaponIndex(weaponName);
-		if (weaponIndex == -1)
-		{
-			LogError("Unable to find weapon %s", weaponName);
-			return Plugin_Handled;
-		}
+		char groupIdStr[64];
+		GetCmdArg(2, groupIdStr, sizeof(groupIdStr));
+		int groupId = StringToInt(groupIdStr);
 
-		char skinIdStr[64];
-		GetCmdArg(3, skinIdStr, sizeof(skinIdStr));
-		int skinId = StringToInt(skinIdStr);
+		char gloveIdStr[64];
+		GetCmdArg(3, gloveIdStr, sizeof(gloveIdStr));
+		int gloveId = StringToInt(gloveIdStr);
 
 		char seedIdStr[64];
 		GetCmdArg(4, seedIdStr, sizeof(seedIdStr));
@@ -50,17 +45,18 @@ public Action CommandDeagleGloveTest(int client, int args)
 		GetCmdArg(5, weaponFloatStr, sizeof(weaponFloatStr));
 		float weaponFloat = StringToFloat(weaponFloatStr);
 
-		UpdateSkin(target, weaponIndex, skinId, seedId, weaponFloat);
+		UpdateSkin(target, groupId, gloveId, seedId, weaponFloat);
 
 		if (args >= 6)
 		{
-			char weaponDisplayName[128];
-			GetCmdArg(6, weaponDisplayName, sizeof(weaponDisplayName));
-			UpdateMenu(target, weaponDisplayName, seedId, weaponFloat);
+			char gloveDisplayname[128];
+			GetCmdArg(6, gloveDisplayname, sizeof(gloveDisplayname));
+			UpdateMenu(target, gloveDisplayname, seedId, weaponFloat);
 		}
+		
 		return Plugin_Handled;
 	}
-}*/
+}
 
 int InfoMenuHandler(Menu menu, MenuAction action, int client, int selection)
 {
