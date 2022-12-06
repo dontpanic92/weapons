@@ -119,7 +119,7 @@ void UpdateGlove(int client, int groupId, int gloveId, int seedId, float weaponF
 	UpdatePlayerData(client, updateFields);
 
 
-	g_fFloatValue[client][g_iTeam[client]] = weaponFloat;
+	g_fFloatValue[client][team] = weaponFloat;
 	Format(updateFields, sizeof(updateFields), "%s_float = %.2f", teamName, g_fFloatValue[client][team]);
 	UpdatePlayerData(client, updateFields);
 
