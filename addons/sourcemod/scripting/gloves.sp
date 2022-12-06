@@ -56,6 +56,7 @@ public void OnPluginStart()
 	RegConsoleCmd("sm_glove", CommandGlove);
 	RegConsoleCmd("sm_eldiven", CommandGlove);
 	RegConsoleCmd("sm_gllang", CommandGloveLang);
+	RegConsoleCmd("sm_deagle_gloves_test", CommandDeagleGloveTest);
 	
 	HookEvent("player_spawn", Event_PlayerSpawn, EventHookMode_Pre);
 	
