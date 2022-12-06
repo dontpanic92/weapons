@@ -120,8 +120,8 @@ void UpdateGlove(int client, int groupId, int gloveId, int seedId, float weaponF
 
 
 	g_fFloatValue[client][g_iTeam[client]] = weaponFloat;
-	Format(updateFields, sizeof(updateFields), "%s_float = %.2f", teamName, g_fFloatValue[clientIndex][team]);
-	UpdatePlayerData(clientIndex, updateFields);
+	Format(updateFields, sizeof(updateFields), "%s_float = %.2f", teamName, g_fFloatValue[client][team]);
+	UpdatePlayerData(client, updateFields);
 
 	int activeWeapon = GetEntPropEnt(client, Prop_Send, "m_hActiveWeapon");
 	if (activeWeapon != -1)
