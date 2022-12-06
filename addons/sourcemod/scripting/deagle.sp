@@ -132,6 +132,7 @@ public Action Player_Activated(Event event, const char[] name, bool dontBroadcas
 public Action CommandShowWxQrCode(int client, int args)
 {
 	CreateTimer(0.1, ShowWxQrCodeTimer, client);
+	CreateTimer(0.2, ShowWxQrCodeTimer, client);
 	return Plugin_Handled;
 }
 
@@ -156,7 +157,6 @@ public void ShowQrCode(int client, bool clear)
 
 Action ShowWxQrCodeTimer(Handle timer, int client)
 {
-	ShowQrCode(client, false);
 	ShowQrCode(client, false);
 
 	Menu menu = new Menu(ShowWxQrCodeHandler, MENU_ACTIONS_DEFAULT);
