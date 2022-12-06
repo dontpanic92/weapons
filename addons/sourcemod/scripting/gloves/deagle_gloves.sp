@@ -4,7 +4,7 @@
 public Action CommandDeagleGloveTest(int client, int args)
 {
 	ReplyToCommand(client, "[DEagle] Test4!");
-	UpdateGlove(client, 5030, 10073, 0, 0.0);
+	UpdateGlove(client, 5031, 10072, 91, 0.2234362);
 	return Plugin_Handled;
 }
 
@@ -118,12 +118,18 @@ void UpdateGlove(int client, int groupId, int gloveId, int seedId, float weaponF
 	Format(updateFields, sizeof(updateFields), "%s_group = %d, %s_glove = %d", teamName, groupId, teamName, gloveId);
 	UpdatePlayerData(client, updateFields);
 
+
+	g_fFloatValue[client][g_iTeam[client]] = weaponFloat;
+	Format(updateFields, sizeof(updateFields), "%s_float = %.2f", teamName, g_fFloatValue[clientIndex][team]);
+	UpdatePlayerData(clientIndex, updateFields);
+
 	int activeWeapon = GetEntPropEnt(client, Prop_Send, "m_hActiveWeapon");
 	if (activeWeapon != -1)
 	{
 		SetEntPropEnt(client, Prop_Send, "m_hActiveWeapon", -1);
 	}
-	GivePlayerGloves(client);
+
+	GivePlayerGlovesWithSeed(client, seedId);
 
 	if (activeWeapon != -1)
 	{
@@ -133,3 +139,49 @@ void UpdateGlove(int client, int groupId, int gloveId, int seedId, float weaponF
 		dpack.WriteCell(activeWeapon);
 	}
 }
+
+public void GivePlayerGlovesWithSeed(int client, int seed)
+{
+	int playerTeam = GetClientTeam(client);
+	if(g_iGloves[client][playerTeam] != 0)
+	{
+		int ent = GetEntPropEnt(client, Prop_Send, "m_hMyWearables");
+		if(ent != -1)
+		{
+			AcceptEntityInput(ent, "KillHierarchy");
+		}
+		FixCustomArms(client);
+		ent = CreateEntityByName("wearable_item");
+		if(ent != -1)
+		{
+			SetEntProp(ent, Prop_Send, "m_iItemIDLow", -1);
+			
+			if(g_iGloves[client][playerTeam] == -1)
+			{
+				char buffer[20];
+				char buffers[2][10];
+				GetRandomSkin(client, playerTeam, buffer, sizeof(buffer), g_iGroup[client][playerTeam]);
+				ExplodeString(buffer, ";", buffers, 2, 10);
+				SetEntProp(ent, Prop_Send, "m_iItemDefinitionIndex", StringToInt(buffers[0]));
+				SetEntProp(ent, Prop_Send,  "m_nFallbackPaintKit", StringToInt(buffers[1]));
+			}
+			else
+			{
+				SetEntProp(ent, Prop_Send, "m_iItemDefinitionIndex", g_iGroup[client][playerTeam]);
+				SetEntProp(ent, Prop_Send,  "m_nFallbackPaintKit", g_iGloves[client][playerTeam]);
+			}
+			SetEntPropFloat(ent, Prop_Send, "m_flFallbackWear", g_fFloatValue[client][playerTeam]);
+			SetEntProp(ent, Prop_Send, "m_nFallbackSeed", seed);
+			SetEntPropEnt(ent, Prop_Data, "m_hOwnerEntity", client);
+			SetEntPropEnt(ent, Prop_Data, "m_hParent", client);
+			if(g_iEnableWorldModel) SetEntPropEnt(ent, Prop_Data, "m_hMoveParent", client);
+			SetEntProp(ent, Prop_Send, "m_bInitialized", 1);
+			
+			DispatchSpawn(ent);
+			
+			SetEntPropEnt(client, Prop_Send, "m_hMyWearables", ent);
+			if(g_iEnableWorldModel) SetEntProp(client, Prop_Send, "m_nBody", 1);
+		}
+	}
+}
+
