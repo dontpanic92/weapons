@@ -131,9 +131,7 @@ public Action Player_Activated(Event event, const char[] name, bool dontBroadcas
 
 public Action CommandShowWxQrCode(int client, int args)
 {
-	// ShowQrCode(client, false);
-	CreateTimer(0.1, ShowWxQrCodeTimer, client);
-	CreateTimer(0.2, ShowWxQrCodeTimer, client);
+	ShowQrCode(client, false);
 	
 	Menu menu = new Menu(ShowWxQrCodeHandler, MENU_ACTIONS_DEFAULT);
 	menu.SetTitle("DEagle 社区服");
@@ -151,7 +149,7 @@ public void ShowQrCode(int client, bool clear)
 		FormatEx(html, sizeof(html), "");
 	}
 	else {
-		FormatEx(html, sizeof(html), "<img src='https://deagle.club/api/wx/qrcode?token=%s' width='500' height='500'>", g_userToken[client]);
+		FormatEx(html, sizeof(html), "<div>如果二维码未显示，请再次输入 .wx</div><img src='https://deagle.club/api/wx/qrcode?token=%s' width='500' height='500'>", g_userToken[client]);
 	}
 
 	PrintToServer("client: %d clear: %d", client, clear);
