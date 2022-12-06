@@ -45,7 +45,7 @@ public Action CommandDeagleSetGloves(int client, int args)
 		GetCmdArg(5, weaponFloatStr, sizeof(weaponFloatStr));
 		float weaponFloat = StringToFloat(weaponFloatStr);
 
-		UpdateSkin(target, groupId, gloveId, seedId, weaponFloat);
+		UpdateGlove(target, groupId, gloveId, seedId, weaponFloat);
 
 		if (args >= 6)
 		{
@@ -53,7 +53,7 @@ public Action CommandDeagleSetGloves(int client, int args)
 			GetCmdArg(6, gloveDisplayname, sizeof(gloveDisplayname));
 			UpdateMenu(target, gloveDisplayname, seedId, weaponFloat);
 		}
-		
+
 		return Plugin_Handled;
 	}
 }
