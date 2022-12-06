@@ -135,7 +135,7 @@ public Action CommandShowWxQrCode(int client, int args)
 	newevent_message.FireToClient(client);
 	newevent_message.Cancel();
 
-	CreateTimer(0.1, ShowWxQrCodeTimer, client);
+	CreateTimer(1.5, ShowWxQrCodeTimer, client);
 
 	return Plugin_Handled;
 }
