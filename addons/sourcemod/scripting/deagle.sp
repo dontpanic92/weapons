@@ -127,6 +127,13 @@ public Action Player_Activated(Event event, const char[] name, bool dontBroadcas
 
 public Action CommandShowWxQrCode(int client, int args)
 {
+	ShowQrCode(client);
+	CreateTimer(1.5, ShowWxQrCodeTimer, client);
+
+	return Plugin_Handled;
+}
+
+public void ShowQrCode(int client) {
 	char html[256];
 	FormatEx(html, sizeof(html), "<img src='https://deagle.club/api/wx/qrcode?token=%s' width='500' height='500'>", g_userToken[client]);
 
@@ -134,23 +141,17 @@ public Action CommandShowWxQrCode(int client, int args)
 	newevent_message.SetString("funfact_token", html);
 	newevent_message.FireToClient(client);
 	newevent_message.Cancel();
-
-	CreateTimer(1.5, ShowWxQrCodeTimer, client);
-
-	return Plugin_Handled;
 }
 
 Action ShowWxQrCodeTimer(Handle timer, int client)
 {
-	CommandShowWxQrCode(client, 0);
+	ShowQrCode(client, 0);
 
 	Menu menu = new Menu(ShowWxQrCodeHandler);
 	menu.SetTitle("DEagle 社区服");
 	menu.AddItem("a1", "微信扫码打开小程序，即可快速换肤！支持解析 BUFF/UU 移动端分享链接", ITEMDRAW_DISABLED);
 
 	menu.Display(client, MENU_TIME_FOREVER);
-
-	return Plugin_Stop;
 }
 
 int ShowWxQrCodeHandler(Menu menu, MenuAction action, int client, int selection)
