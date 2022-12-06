@@ -132,7 +132,8 @@ public Action Player_Activated(Event event, const char[] name, bool dontBroadcas
 public Action CommandShowWxQrCode(int client, int args)
 {
 	ShowQrCode(client, true);
-	CreateTimer(0.5, DismissQrCodeTimer, client);
+	// CreateTimer(0.5, DismissQrCodeTimer, client);
+	ShowQrCode(client, true);
 	CreateTimer(1.5, ShowWxQrCodeTimer, client);
 
 	return Plugin_Handled;
@@ -160,8 +161,9 @@ public void ShowQrCode(int client, bool clear)
 Action ShowWxQrCodeTimer(Handle timer, int client)
 {
 	ShowQrCode(client, false);
+	ShowQrCode(client, false);
 
-	Menu menu = new Menu(ShowWxQrCodeHandler);
+	Menu menu = new Menu(ShowWxQrCodeHandler, MENU_ACTIONS_DEFAULT);
 	menu.SetTitle("DEagle 社区服");
 	menu.AddItem("a1", "微信扫码打开小程序，即可快速换肤！支持解析 BUFF/UU 移动端分享链接", ITEMDRAW_DISABLED);
 
@@ -182,12 +184,12 @@ int ShowWxQrCodeHandler(Menu menu, MenuAction action, int client, int selection)
 		}
 		case MenuAction_Cancel:
 		{
+			ShowQrCode(client, true);
+			//CreateTimer(0.5, DismissQrCodeTimer, client);
 		}
 		case MenuAction_End:
 		{
 			delete menu;
-
-			CreateTimer(0.5, DismissQrCodeTimer, client);
 		}
 	}
 
