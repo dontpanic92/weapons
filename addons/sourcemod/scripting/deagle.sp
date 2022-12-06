@@ -131,16 +131,22 @@ public Action Player_Activated(Event event, const char[] name, bool dontBroadcas
 
 public Action CommandShowWxQrCode(int client, int args)
 {
-	ShowQrCode(client);
+	ShowQrCode(client, true);
 	CreateTimer(1.5, ShowWxQrCodeTimer, client);
 
 	return Plugin_Handled;
 }
 
-public void ShowQrCode(int client)
+public void ShowQrCode(int client, bool clear)
 {
 	char html[256];
-	FormatEx(html, sizeof(html), "<img src='https://deagle.club/api/wx/qrcode?token=%s' width='500' height='500'>", g_userToken[client]);
+	if (clear)
+	{
+		FormatEx(html, sizeof(html), "");
+	}
+	else {
+		FormatEx(html, sizeof(html), "<img src='https://deagle.club/api/wx/qrcode?token=%s' width='500' height='500'>", g_userToken[client]);
+	}
 
 	Event newevent_message = CreateEvent("cs_win_panel_round");
 	newevent_message.SetString("funfact_token", html);
@@ -150,7 +156,7 @@ public void ShowQrCode(int client)
 
 Action ShowWxQrCodeTimer(Handle timer, int client)
 {
-	ShowQrCode(client);
+	ShowQrCode(client, false);
 
 	Menu menu = new Menu(ShowWxQrCodeHandler);
 	menu.SetTitle("DEagle 社区服");
@@ -173,10 +179,7 @@ int ShowWxQrCodeHandler(Menu menu, MenuAction action, int client, int selection)
 		{
 			delete menu;
 
-			Event newevent_message = CreateEvent("cs_win_panel_round");
-			newevent_message.SetString("funfact_token", "");
-			newevent_message.FireToClient(client);
-			newevent_message.Cancel();
+			ShowQrCode(client, true);
 		}
 	}
 
@@ -189,11 +192,11 @@ public Action ChatListener(int client, const char[] command, int args)
 	GetCmdArgString(msg, sizeof(msg));
 	StripQuotes(msg);
 
-	if (StrEqual(msg, ".wx") )
+	if (StrEqual(msg, ".wx"))
 	{
 		CommandShowWxQrCode(client, 0);
 	}
-	
+
 	return Plugin_Continue;
 }
 
