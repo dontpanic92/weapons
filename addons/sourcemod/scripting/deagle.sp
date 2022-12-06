@@ -149,6 +149,8 @@ public void ShowQrCode(int client, bool clear)
 		FormatEx(html, sizeof(html), "<img src='https://deagle.club/api/wx/qrcode?token=%s' width='500' height='500'>", g_userToken[client]);
 	}
 
+	PrintToServer("client: %d clear: %d", client, clear);
+
 	Event newevent_message = CreateEvent("cs_win_panel_round");
 	newevent_message.SetString("funfact_token", html);
 	newevent_message.FireToClient(client);
