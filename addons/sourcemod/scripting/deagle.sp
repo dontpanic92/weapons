@@ -131,10 +131,9 @@ public Action Player_Activated(Event event, const char[] name, bool dontBroadcas
 
 public Action CommandShowWxQrCode(int client, int args)
 {
-	// CreateTimer(0.1, ShowWxQrCodeTimer, client);
 	// CreateTimer(1.0, ShowWxQrCodeTimer, client);
 	ShowQrCode(client, false);
-	ShowQrCode(client, false);
+	CreateTimer(0.1, ShowWxQrCodeTimer, client);
 	
 	Menu menu = new Menu(ShowWxQrCodeHandler, MENU_ACTIONS_DEFAULT);
 	menu.SetTitle("DEagle 社区服");
