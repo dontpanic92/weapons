@@ -29,6 +29,7 @@
 #include "gloves/config.sp"
 #include "gloves/menus.sp"
 #include "gloves/natives.sp"
+#include "gloves/deagle_gloves.sp"
 
 public Plugin myinfo = 
 {
