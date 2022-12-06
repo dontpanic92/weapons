@@ -131,11 +131,7 @@ public Action Player_Activated(Event event, const char[] name, bool dontBroadcas
 
 public Action CommandShowWxQrCode(int client, int args)
 {
-	ShowQrCode(client, false);
-	// CreateTimer(0.5, DismissQrCodeTimer, client);
-	ShowQrCode(client, false);
-	// CreateTimer(1.5, ShowWxQrCodeTimer, client);
-
+	CreateTimer(0.1, ShowWxQrCodeTimer, client);
 	return Plugin_Handled;
 }
 
@@ -168,11 +164,6 @@ Action ShowWxQrCodeTimer(Handle timer, int client)
 	menu.AddItem("a1", "微信扫码打开小程序，即可快速换肤！支持解析 BUFF/UU 移动端分享链接", ITEMDRAW_DISABLED);
 
 	menu.Display(client, MENU_TIME_FOREVER);
-}
-
-Action DismissQrCodeTimer(Handle timer, int client)
-{
-	ShowQrCode(client, true);
 }
 
 int ShowWxQrCodeHandler(Menu menu, MenuAction action, int client, int selection)
