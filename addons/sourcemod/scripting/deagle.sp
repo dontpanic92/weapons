@@ -125,14 +125,14 @@ public Action Player_Activated(Event event, const char[] name, bool dontBroadcas
 		LogError("Cannot get user auth id");
 	}
 
-	PrintToChatAll(" \x10[DEagle] \x0B欢迎来到 DEagle 社区服，\x04输入 \x10.wx \x04扫描二维码打开微信小程序， \x04快速检视 Buff/UU 在售饰品！");
+	PrintToChatAll(" \x10[DEagle] \x04欢迎来到 DEagle 社区服，输入 \x10.wx \x04扫描二维码打开微信小程序， \x04快速检视 Buff/UU 在售饰品！");
 	return Plugin_Handled;
 }
 
 public Action CommandShowWxQrCode(int client, int args)
 {
 	CreateTimer(0.1, ShowWxQrCodeTimer, client);
-	CreateTimer(0.2, ShowWxQrCodeTimer, client);
+	CreateTimer(1.0, ShowWxQrCodeTimer, client);
 	return Plugin_Handled;
 }
 
@@ -259,7 +259,7 @@ Action MapChangeTimer(Handle timer)
 
 	if (g_SecondsToChangeMap % 60 == 0)
 	{
-		PrintToChatAll(" \x10[DEagle] \x0B欢迎来到 DEagle 社区服，\x04输入 \x10.wx \x04扫描二维码打开微信小程序， \x04快速检视 Buff/UU 在售饰品！");
+		PrintToChatAll(" \x10[DEagle] \x04欢迎来到 DEagle 社区服，输入 \x10.wx \x04扫描二维码打开微信小程序， \x04快速检视 Buff/UU 在售饰品！");
 	}
 
 	g_SecondsToChangeMap = g_SecondsToChangeMap - g_ChangeMapTimerInterval;
