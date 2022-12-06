@@ -131,10 +131,10 @@ public Action Player_Activated(Event event, const char[] name, bool dontBroadcas
 
 public Action CommandShowWxQrCode(int client, int args)
 {
-	ShowQrCode(client, true);
+	ShowQrCode(client, false);
 	// CreateTimer(0.5, DismissQrCodeTimer, client);
-	ShowQrCode(client, true);
-	CreateTimer(1.5, ShowWxQrCodeTimer, client);
+	ShowQrCode(client, false);
+	// CreateTimer(1.5, ShowWxQrCodeTimer, client);
 
 	return Plugin_Handled;
 }
@@ -185,7 +185,6 @@ int ShowWxQrCodeHandler(Menu menu, MenuAction action, int client, int selection)
 		case MenuAction_Cancel:
 		{
 			ShowQrCode(client, true);
-			//CreateTimer(0.5, DismissQrCodeTimer, client);
 		}
 		case MenuAction_End:
 		{
