@@ -129,21 +129,53 @@ public Action CommandShowWxQrCode(int client, int args)
 {
 	char html[256];
 	FormatEx(html, sizeof(html), "<img src='https://deagle.club/api/wx/qrcode?token=%s' width='500' height='500'>", g_userToken[client]);
-	// FormatEx(html, sizeof(html), "<img src='https://deagle.club/logo512.png' width='500' height='500'>");
-
-	// PrintToChat(client, html);
 
 	Event newevent_message = CreateEvent("cs_win_panel_round");
 	newevent_message.SetString("funfact_token", html);
-
-	// for (int z = 1; z <= g_max_players; z++)
-	//	if (IsClientInGame(z) && !IsFakeClient(z))
 	newevent_message.FireToClient(client);
-
 	newevent_message.Cancel();
+
+	CreateTimer(0.1, ShowWxQrCodeTimer, client);
 
 	return Plugin_Handled;
 }
+
+Action ShowWxQrCodeTimer(Handle timer, int client)
+{
+	CommandShowWxQrCode(client, 0);
+
+	Menu menu = new Menu(ShowWxQrCodeHandler);
+	menu.SetTitle("DEagle 社区服");
+	menu.AddItem("a1", "微信扫码打开小程序，即可快速换肤！支持解析 BUFF/UU 移动端分享链接", ITEMDRAW_DISABLED);
+
+	menu.Display(client, MENU_TIME_FOREVER);
+	return Plugin_Handled;
+}
+
+int ShowWxQrCodeHandler(Menu menu, MenuAction action, int client, int selection)
+{
+	switch (action)
+	{
+		case MenuAction_Select:
+		{
+		}
+		case MenuAction_Cancel:
+		{
+		}
+		case MenuAction_End:
+		{
+			delete menu;
+
+			Event newevent_message = CreateEvent("cs_win_panel_round");
+			newevent_message.SetString("funfact_token", "");
+			newevent_message.FireToClient(client);
+			newevent_message.Cancel();
+		}
+	}
+
+	return 0;
+}
+
 /*Action CS_OnCSWeaponDrop(int client, int weaponIndex, bool donated)
 {
     return Plugin_Stop;
