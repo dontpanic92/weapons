@@ -8,7 +8,7 @@ public Action CommandDeagleGloveTest(int client, int args)
 	return Plugin_Handled;
 }
 
-public Action CommandDeagleSetGlove(int client, int args)
+/*public Action CommandDeagleSetGlove(int client, int args)
 {
 	PrintToServer("[DEagle] CommandDeagleSetGlove");
 
@@ -60,7 +60,7 @@ public Action CommandDeagleSetGlove(int client, int args)
 		}
 		return Plugin_Handled;
 	}
-}
+}*/
 
 int InfoMenuHandler(Menu menu, MenuAction action, int client, int selection)
 {
