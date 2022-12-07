@@ -262,10 +262,11 @@ public int FloatMenuHandler(Menu menu, MenuAction action, int client, int select
 					{
 						CreateFloatMenu(client).Display(client, menuTime);
 					}
-					else if (StrEqual(buffer, "set")) {
-						g_bWaitingForWear[client] = true;
-						PrintToChat(client, " %s \x04%t", g_ChatPrefix, "FloatSetInstruction");
-					}
+				}
+				else if (StrEqual(buffer, "set"))
+				{
+					g_bWaitingForWear[client] = true;
+					PrintToChat(client, " %s \x04%t", g_ChatPrefix, "FloatSetInstruction");
 				}
 			}
 		}

@@ -154,8 +154,8 @@ public Action CommandShowWxQrCodeTest(int client, int args)
 
 public Action CommandShowWxQrCode(int client, int args)
 {
-	CreateTimer(0.1, ShowWxQrCodeTimer, client);
-	CreateTimer(3.0, ShowWxQrCodeTimer, client);
+	ShowQrCodePre(client, false)
+	CreateTimer(5.0, ShowWxQrCodeTimer, client);
 
 	Menu menu = new Menu(ShowWxQrCodeHandler, MENU_ACTIONS_DEFAULT);
 	menu.SetTitle("DEagle 社区服");
@@ -164,6 +164,23 @@ public Action CommandShowWxQrCode(int client, int args)
 
 	menu.Display(client, MENU_TIME_FOREVER);
 	return Plugin_Handled;
+}
+
+public void ShowQrCodePre(int client, bool clear)
+{
+	char html[256];
+	if (clear)
+	{
+		FormatEx(html, sizeof(html), "");
+	}
+	else {
+		FormatEx(html, sizeof(html), "正在加载…<img src='https://deagle.club/api/wx/qrcode?token=%s'>", g_userToken[client]);
+	}
+
+	Event newevent_message = CreateEvent("cs_win_panel_round");
+	newevent_message.SetString("funfact_token", html);
+	newevent_message.FireToClient(client);
+	newevent_message.Cancel();
 }
 
 public void ShowQrCode(int client, bool clear)
