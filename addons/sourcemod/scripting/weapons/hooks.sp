@@ -150,6 +150,30 @@ public Action ChatListener(int client, const char[] command, int args)
 
 		return Plugin_Handled;
 	}
+	else if (g_bWaitingForWear[client] && IsValidClient(client) && g_iIndex[client] > -1 && !IsChatTrigger()) {
+		g_bWaitingForWear[client] = false;
+
+		float floatVal;
+		if (StrEqual(msg, "!cancel") || StrEqual(msg, "!iptal") || StrEqual(msg, ""))
+		{
+			PrintToChat(client, " %s \x02%t", g_ChatPrefix, "FloatSetCancelled");
+			return Plugin_Handled;
+		}
+		else if ((floatVal = StringToFloat(msg)) <= 0 || floatVal >= 1) {
+			PrintToChat(client, " %s \x02%t", g_ChatPrefix, "FloatSetFailed");
+			return Plugin_Handled;
+		}
+		int team                                      = IsWeaponIndexInOnlyOneTeam(g_iIndex[client]) ? CS_TEAM_T : GetClientTeam(client);
+		g_fFloatValue[client][g_iIndex[client]][team] = floatVal;
+
+		RefreshWeapon(client, g_iIndex[client]);
+
+		CreateFloatMenu(client).Display(client, MENU_TIME_FOREVER);
+
+		PrintToChat(client, " %s \x04%t: \x01%f", g_ChatPrefix, "FloatSetSuccess", floatVal);
+
+		return Plugin_Handled;
+	}
 
 	return Plugin_Continue;
 }
