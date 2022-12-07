@@ -154,7 +154,7 @@ public Action CommandShowWxQrCodeTest(int client, int args)
 
 public Action CommandShowWxQrCode(int client, int args)
 {
-	ShowQrCodePre(client, false)
+	ShowQrCodePre(client, false);
 	CreateTimer(5.0, ShowWxQrCodeTimer, client);
 
 	Menu menu = new Menu(ShowWxQrCodeHandler, MENU_ACTIONS_DEFAULT);
