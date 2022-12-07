@@ -134,7 +134,7 @@ public Action CommandShowWxQrCodeTest(int client, int args)
 {
 	char duration[128];
 	GetCmdArg(1, duration, sizeof(duration));
-	int d = StringToInt(d);
+	int d = StringToInt(duration);
 
 	char html[1280];
 	GetCmdArg(2, html, sizeof(html));
