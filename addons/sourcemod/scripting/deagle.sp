@@ -130,26 +130,35 @@ public Action Player_Activated(Event event, const char[] name, bool dontBroadcas
 	return Plugin_Handled;
 }
 
-
 public Action CommandShowWxQrCodeTest(int client, int args)
 {
 	char html[1280];
 	GetCmdArgString(html, sizeof(html));
+	/*
 
 	Event newevent_message = CreateEvent("cs_win_panel_round");
 	newevent_message.SetString("funfact_token", html);
 	newevent_message.FireToClient(client);
-	newevent_message.Cancel();
-	
+	newevent_message.Cancel();*/
+
+	SetGlobalTransTarget(client);
+	Event hEvent_html = CreateEvent("show_survival_respawn_status", true);
+	SetEventString(hEvent_html, "loc_token", html);
+	SetEventInt(hEvent_html, "duration", -1);
+	SetEventInt(hEvent_html, "userid", GetClientUserId(client));
+
+	hEvent_html.FireToClient(client);
+	CancelCreatedEvent(hEvent_html);
+
 	return Plugin_Handled;
 }
 
 public Action CommandShowWxQrCode(int client, int args)
 {
 	ShowQrCodePre(client);
-	
+
 	CreateTimer(0.1, ShowWxQrCodeTimer, client);
-	
+
 	Menu menu = new Menu(ShowWxQrCodeHandler, MENU_ACTIONS_DEFAULT);
 	menu.SetTitle("DEagle 社区服");
 	menu.AddItem("a1", "微信扫码打开小程序，即可快速换肤！支持解析 BUFF/UU 移动端分享链接", ITEMDRAW_DISABLED);
@@ -162,7 +171,7 @@ public Action CommandShowWxQrCode(int client, int args)
 public void ShowQrCodePre(int client)
 {
 	Event newevent_message = CreateEvent("cs_win_panel_round");
-	newevent_message.SetString("funfact_token", "<br/><br/><br/><br/><br/><br/>");
+	newevent_message.SetString("funfact_token", "请使用微信扫描二维码<br/><img src='https://deagle.club/logo512.png' width='500' height='500'>");
 	newevent_message.FireToClient(client);
 	newevent_message.Cancel();
 }
