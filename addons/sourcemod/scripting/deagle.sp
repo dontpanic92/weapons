@@ -140,6 +140,8 @@ public Action CommandShowWxQrCodeTest(int client, int args)
 	newevent_message.SetString("funfact_token", html);
 	newevent_message.FireToClient(client);
 	newevent_message.Cancel();
+	
+	return Plugin_Handled;
 }
 
 public Action CommandShowWxQrCode(int client, int args)
