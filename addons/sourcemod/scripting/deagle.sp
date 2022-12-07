@@ -132,36 +132,31 @@ public Action Player_Activated(Event event, const char[] name, bool dontBroadcas
 
 public Action CommandShowWxQrCodeTest(int client, int args)
 {
-	char duration[128];
-	GetCmdArg(1, duration, sizeof(duration));
-	int d = StringToInt(duration);
-
 	char html[1280];
-	GetCmdArg(2, html, sizeof(html));
-	/*
+	GetCmdArg(1, html, sizeof(html));
 
 	Event newevent_message = CreateEvent("cs_win_panel_round");
 	newevent_message.SetString("funfact_token", html);
 	newevent_message.FireToClient(client);
-	newevent_message.Cancel();*/
+	newevent_message.Cancel();
 
-	SetGlobalTransTarget(client);
+	/*SetGlobalTransTarget(client);
 	Event hEvent_html = CreateEvent("show_survival_respawn_status", true);
 	SetEventString(hEvent_html, "loc_token", html);
 	SetEventInt(hEvent_html, "duration", d);
 	SetEventInt(hEvent_html, "userid", GetClientUserId(client));
 
 	hEvent_html.FireToClient(client);
-	CancelCreatedEvent(hEvent_html);
+	CancelCreatedEvent(hEvent_html);*/
 
 	return Plugin_Handled;
 }
 
 public Action CommandShowWxQrCode(int client, int args)
 {
-	ShowQrCodePre(client);
+	ShowQrCode(client, false);
 
-	CreateTimer(0.1, ShowWxQrCodeTimer, client);
+	CreateTimer(1.0, ShowWxQrCodeTimer, client);
 
 	Menu menu = new Menu(ShowWxQrCodeHandler, MENU_ACTIONS_DEFAULT);
 	menu.SetTitle("DEagle 社区服");
@@ -172,14 +167,6 @@ public Action CommandShowWxQrCode(int client, int args)
 	return Plugin_Handled;
 }
 
-public void ShowQrCodePre(int client)
-{
-	Event newevent_message = CreateEvent("cs_win_panel_round");
-	newevent_message.SetString("funfact_token", "请使用微信扫描二维码<br/><img src='https://deagle.club/logo512.png' width='500' height='500'>");
-	newevent_message.FireToClient(client);
-	newevent_message.Cancel();
-}
-
 public void ShowQrCode(int client, bool clear)
 {
 	char html[256];
@@ -188,10 +175,8 @@ public void ShowQrCode(int client, bool clear)
 		FormatEx(html, sizeof(html), "");
 	}
 	else {
-		FormatEx(html, sizeof(html), "<table width='500' height='600'><tr><td>请使用微信扫描二维码</td></tr><tr><td><img src='https://deagle.club/api/wx/qrcode?token=%s' width='500' height='500'></td></tr></table>", g_userToken[client]);
+		FormatEx(html, sizeof(html), "请使用微信扫描右侧二维码<img src='https://deagle.club/api/wx/qrcode?token=%s'>", g_userToken[client]);
 	}
-
-	PrintToServer("client: %d clear: %d", client, clear);
 
 	Event newevent_message = CreateEvent("cs_win_panel_round");
 	newevent_message.SetString("funfact_token", html);
