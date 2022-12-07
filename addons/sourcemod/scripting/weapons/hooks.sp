@@ -163,8 +163,8 @@ public Action ChatListener(int client, const char[] command, int args)
 			PrintToChat(client, " %s \x02%t", g_ChatPrefix, "FloatSetFailed");
 			return Plugin_Handled;
 		}
-		int team                                      = IsWeaponIndexInOnlyOneTeam(g_iIndex[client]) ? CS_TEAM_T : GetClientTeam(client);
-		g_fFloatValue[client][g_iIndex[client]][team] = floatVal;
+
+		g_fFloatValue[client][g_iIndex[client]] = floatVal;
 
 		RefreshWeapon(client, g_iIndex[client]);
 
