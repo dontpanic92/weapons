@@ -193,7 +193,7 @@ Menu CreateFloatMenu(int client)
 	fValue       = fValue * 100.0;
 	int wear     = 100 - RoundFloat(fValue);
 
-	menu.SetTitle("%T%d%%(%f)", "SetFloat", client, wear, fValue);
+	menu.SetTitle("%T%d%%(%f)", "SetFloat", client, wear, g_fFloatValue[client][g_iIndex[client]]);
 
 	Format(buffer, sizeof(buffer), "%T", "Increase", client, g_iFloatIncrementPercentage);
 	menu.AddItem("increase", buffer, wear == 100 ? ITEMDRAW_DISABLED : ITEMDRAW_DEFAULT);

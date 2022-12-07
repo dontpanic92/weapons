@@ -118,6 +118,7 @@ public void T_CreateTableCallback(Database database, DBResultSet results, const 
 	}
 	else
 	{
+    		AddSeedColumns();
 		for(int i = 1; i <= MaxClients; i++)
 		{
 			if(IsClientConnected(i))
@@ -126,4 +127,14 @@ public void T_CreateTableCallback(Database database, DBResultSet results, const 
 			}
 		}
 	}
+}
+
+void AddSeedColumns() {
+  Transaction txn = new Transaction();
+  char query[512];
+  Format(query, sizeof(query), "ALTER TABLE %sgloves ADD t_seed int(10) NOT NULL DEFAULT '-1'", g_TablePrefix);
+  txn.AddQuery(query);
+  Format(query, sizeof(query), "ALTER TABLE %sgloves ADD ct_seed int(10) NOT NULL DEFAULT '-1'", g_TablePrefix);
+  txn.AddQuery(query);
+  db.Execute(txn);
 }
