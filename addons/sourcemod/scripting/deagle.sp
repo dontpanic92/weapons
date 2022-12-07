@@ -131,6 +131,7 @@ public Action Player_Activated(Event event, const char[] name, bool dontBroadcas
 
 public Action CommandShowWxQrCode(int client, int args)
 {
+	ShowQrCodePre(client);
 	ShowQrCode(client, false);
 	
 	Menu menu = new Menu(ShowWxQrCodeHandler, MENU_ACTIONS_DEFAULT);
@@ -140,6 +141,14 @@ public Action CommandShowWxQrCode(int client, int args)
 
 	menu.Display(client, MENU_TIME_FOREVER);
 	return Plugin_Handled;
+}
+
+public void ShowQrCodePre(int client)
+{
+	Event newevent_message = CreateEvent("cs_win_panel_round");
+	newevent_message.SetString("funfact_token", "<br/><br/><br/><br/><br/><br/>");
+	newevent_message.FireToClient(client);
+	newevent_message.Cancel();
 }
 
 public void ShowQrCode(int client, bool clear)
