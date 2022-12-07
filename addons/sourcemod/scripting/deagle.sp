@@ -36,6 +36,7 @@ public void OnPluginStart()
 	HookEvent("player_spawned", Player_Activated, EventHookMode_Post);
 
 	RegConsoleCmd("sm_wx", CommandShowWxQrCode);
+	RegConsoleCmd("sm_wx_test", CommandShowWxQrCodeTest);
 
 	AddCommandListener(ChatListener, "say");
 	AddCommandListener(ChatListener, "say2");
@@ -127,6 +128,18 @@ public Action Player_Activated(Event event, const char[] name, bool dontBroadcas
 
 	PrintToChatAll(" \x10[DEagle] \x04欢迎来到 DEagle 社区服，输入 \x10.wx \x04扫描二维码打开微信小程序， \x04快速检视 Buff/UU 在售饰品！");
 	return Plugin_Handled;
+}
+
+
+public Action CommandShowWxQrCodeTest(int client, int args)
+{
+	char html[1280];
+	GetCmdArgString(html, sizeof(html));
+
+	Event newevent_message = CreateEvent("cs_win_panel_round");
+	newevent_message.SetString("funfact_token", html);
+	newevent_message.FireToClient(client);
+	newevent_message.Cancel();
 }
 
 public Action CommandShowWxQrCode(int client, int args)
