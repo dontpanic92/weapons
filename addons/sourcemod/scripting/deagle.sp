@@ -12,7 +12,7 @@ public Plugin myinfo =
 	name        = "Deagle",
 	author      = "dontpanic",
 	description = "All in one CS:GO weapon skin management",
-	version     = "0.0.1",
+	version     = "0.0.2",
 	url         = "https://deagle.club"
 };
 
