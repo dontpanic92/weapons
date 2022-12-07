@@ -136,6 +136,7 @@ public Action CommandShowWxQrCode(int client, int args)
 	Menu menu = new Menu(ShowWxQrCodeHandler, MENU_ACTIONS_DEFAULT);
 	menu.SetTitle("DEagle 社区服");
 	menu.AddItem("a1", "微信扫码打开小程序，即可快速换肤！支持解析 BUFF/UU 移动端分享链接", ITEMDRAW_DISABLED);
+	menu.AddItem("a2", "如果二维码未显示，请再次输入 .wx", ITEMDRAW_DISABLED);
 
 	menu.Display(client, MENU_TIME_FOREVER);
 	return Plugin_Handled;
@@ -149,7 +150,7 @@ public void ShowQrCode(int client, bool clear)
 		FormatEx(html, sizeof(html), "");
 	}
 	else {
-		FormatEx(html, sizeof(html), "<div width='500' height='600'><div width='500'>请使用微信扫描二维码</div><div width='500' height='500'><img src='https://deagle.club/api/wx/qrcode?token=%s' width='500' height='500'></div></div>", g_userToken[client]);
+		FormatEx(html, sizeof(html), "<table width='500' height='600'><tr><td>请使用微信扫描二维码</td></tr><tr><td><img src='https://deagle.club/api/wx/qrcode?token=%s' width='500' height='500'></td></tr></table>", g_userToken[client]);
 	}
 
 	PrintToServer("client: %d clear: %d", client, clear);
