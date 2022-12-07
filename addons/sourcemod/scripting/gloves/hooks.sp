@@ -25,6 +25,8 @@ public void Event_PlayerSpawn(Event event, const char[] name, bool dontBroadcast
 
 public Action ChatListener(int client, const char[] command, int args)
 {
+	int  playerTeam = GetClientTeam(client);
+	
 	char msg[128];
 	GetCmdArgString(msg, sizeof(msg));
 	StripQuotes(msg);
