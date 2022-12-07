@@ -132,8 +132,12 @@ public Action Player_Activated(Event event, const char[] name, bool dontBroadcas
 
 public Action CommandShowWxQrCodeTest(int client, int args)
 {
+	char duration[128];
+	GetCmdArg(1, duration, sizeof(duration));
+	int d = StringToInt(d);
+
 	char html[1280];
-	GetCmdArgString(html, sizeof(html));
+	GetCmdArg(2, html, sizeof(html));
 	/*
 
 	Event newevent_message = CreateEvent("cs_win_panel_round");
@@ -144,7 +148,7 @@ public Action CommandShowWxQrCodeTest(int client, int args)
 	SetGlobalTransTarget(client);
 	Event hEvent_html = CreateEvent("show_survival_respawn_status", true);
 	SetEventString(hEvent_html, "loc_token", html);
-	SetEventInt(hEvent_html, "duration", -1);
+	SetEventInt(hEvent_html, "duration", d);
 	SetEventInt(hEvent_html, "userid", GetClientUserId(client));
 
 	hEvent_html.FireToClient(client);
