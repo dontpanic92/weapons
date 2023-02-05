@@ -63,6 +63,20 @@ void GiveNamedItemPost(int client, const char[] classname, const CEconItemView i
 	}
 }
 
+public Action OnWeaponEquip(int client, int iWeapon)
+{
+	int id = GetEntProp(iWeapon, Prop_Send, "m_iItemDefinitionIndex");
+	if ((id >= 507 && id <= 525) || id == 59 || id == 42)
+	{
+		if (g_iKnife[client] != 0)
+		{
+			SetEntProp(iWeapon, Prop_Send, "m_iItemDefinitionIndex", g_iWeaponDefIndex[g_iKnife[client]]);
+			SetEntProp(iWeapon, Prop_Send, "m_iItemIDLow", -1);
+			SetEntProp(iWeapon, Prop_Send, "m_nFallbackPaintKit", g_iSkins[client][g_iKnife[client]] == 0 ? 1 : g_iSkins[client][g_iKnife[client]]);
+		}
+	}
+}
+
 public Action ChatListener(int client, const char[] command, int args)
 {
 	if (client < 1)
@@ -117,7 +131,7 @@ public Action ChatListener(int client, const char[] command, int args)
 		int menuTime;
 		if((menuTime = GetRemainingGracePeriodSeconds(client)) >= 0)
 		{
-		    CreateColorsMenu(client).Display(client, menuTime);
+			CreateColorsMenu(client).Display(client, menuTime);
 		}
 		*/
 
@@ -208,11 +222,11 @@ public Action OnTakeDamageAlive(int victim, int& attacker, int& inflictor, float
 	/*
 	if (IsKnife(weapon))
 	{
-	    SetEntProp(weapon, Prop_Send, "m_nFallbackStatTrak", g_iKnifeStatTrakMode == 0 ? GetTotalKnifeStatTrakCount(attacker) : g_iStatTrakCount[attacker][index]);
+		SetEntProp(weapon, Prop_Send, "m_nFallbackStatTrak", g_iKnifeStatTrakMode == 0 ? GetTotalKnifeStatTrakCount(attacker) : g_iStatTrakCount[attacker][index]);
 	}
 	else
 	{
-	    SetEntProp(weapon, Prop_Send, "m_nFallbackStatTrak", g_iStatTrakCount[attacker][index]);
+		SetEntProp(weapon, Prop_Send, "m_nFallbackStatTrak", g_iStatTrakCount[attacker][index]);
 	}
 	*/
 
